@@ -2,23 +2,27 @@ from dotenv import load_dotenv
 load_dotenv()
 import logging
 import os
-from aiogram import Bot, Dispatcher, executor
-# from aiogram.dispatcher.filters import CommandStart
-from aiogram import types
+from aiogram import Bot, Dispatcher, types
+from aiogram.types import Message
 
 logging.basicConfig(level=logging.INFO)
-token = os.getenv("TOKEN")
-bot  = Bot(token=token, parse_mode="HTML")
-db = Dispatcher(bot=bot)
 
-db.message_handler(comands = ['start'])
-async def on_start(message:type.Message):
-    await message.answer(
-        text = f'Salom {message.from_user.full_name}!'
-    )
+API_TOKEN = os.getenv("TOKEN")
+print(API_TOKEN)
+bot = Bot(token=API_TOKEN)
+dp = Dispatcher(bot)
 
+@dp.message_handler(commands=['start'])
+async def start(message: Message):
+    await message.answer("Salom! Men sizning botingizman!")
 
-print(f"API Key: {token}")
+@dp.message_handler(content_types=types.ContentType.TEXT)
+async def echo(message: Message):
+    await message.answer(message.text)
 
 if __name__ == '__main__':
-    executor.start_polling(dispatcher=db)
+    from aiogram import executor
+    executor.start_polling(dp, skip_updates=True)
+
+
+
