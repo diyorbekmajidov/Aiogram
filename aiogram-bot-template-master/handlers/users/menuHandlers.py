@@ -1,9 +1,11 @@
 from aiogram import types
 from loader import dp, bot
-from keyboards.default.startMenuKeyboard import settings_keyboard_uz, settings_keyboard_ru
+from keyboards.default.startMenuKeyboard import settings_keyboard_uz, settings_keyboard_ru, keyboard_ru, keyboard_uz
 from aiogram.dispatcher import FSMContext
 from states.userlang_update import LanguagesUpdate
 from keyboards.inline.langkeyboard import keyboard
+import tracemalloc
+tracemalloc.start()
 
 from .start import databs
 
@@ -52,3 +54,11 @@ async def update_lang_callback(call: types.CallbackQuery, state: FSMContext):
         await call.answer("Til muvaqqaiy sozlandi o'zgartirildi")
         await call.answer(cache_time=60)
         await call.message.delete()
+
+@dp.message_handler(text=["⬅️ Orqaga", "⬅️ Назад"])
+async def back_menu(message: types.Message):
+    user_info = databs.get_user(message.from_user.id)['lang']
+    if user_info=='uz':
+        await message.answer("Siz avvalgi sahifaga qaytdingiz.", reply_markup=keyboard_uz)
+    else:
+        message.answer("Choose the section:\n\n", reply_markup=keyboard_ru)

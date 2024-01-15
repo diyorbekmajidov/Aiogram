@@ -1,33 +1,43 @@
-from aiogram import types
-
-keyboard_uz = types.ReplyKeyboardMarkup(row_width=3, resize_keyboard=True)
-keyboard_uz.add(
-    types.KeyboardButton(text="Kurslarimiz"),
-    types.KeyboardButton(text="⚙️ Texnik yordam"),
-    types.KeyboardButton(text="Bepul darslar"),
-    )
-# keyboard_uz.insert(
-#         types.KeyboardButton("Boshqalarga ulashish", url="https://example.com"),
-# )
-
-keyboard_ru = types.ReplyKeyboardMarkup(row_width=3, resize_keyboard=True)
-keyboard_ru.add(
-    types.KeyboardButton(text="Наши курсы"),
-    types.KeyboardButton(text="⚙️ Техническая поддержка"),
-    types.KeyboardButton(text="Бесплатные уроки"),
-    )
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 
-settings_keyboard_uz = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-settings_keyboard_uz.add(
-    types.KeyboardButton(text="⚙️ tillni almashtirish"),
-    types.KeyboardButton(text="ℹ️ info"),
-    types.KeyboardButton("📍Manzil",),
+keyboard_uz = ReplyKeyboardMarkup(
+    keyboard = [
+        [KeyboardButton(text="Kurslarimiz")],
+        [
+            KeyboardButton(text="💰Bepul darslar"),
+            KeyboardButton(text="📍Filialni tanlang:"),],
+        [KeyboardButton(text="⚙️ Texnik yordam"),
+         KeyboardButton(text="📢 Siznig kurslaringiz")],
+        ],
+    resize_keyboard=True
 )
 
-settings_keyboard_ru = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+keyboard_ru = ReplyKeyboardMarkup(
+    keyboard = [
+        [KeyboardButton(text="Наши курсы")],
+        [
+            KeyboardButton(text="💰Бесплатные уроки:"),
+            KeyboardButton(text="📍Выберите филиал:"),
+        ],
+        [KeyboardButton(text="⚙️ Техническая поддержка:"),
+         KeyboardButton(text="📢 Ваши курсы:")],
+        ],
+    resize_keyboard=True
+)
+
+
+
+settings_keyboard_uz = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+settings_keyboard_uz.add(
+    KeyboardButton(text="⚙️ tillni almashtirish"),
+    KeyboardButton(text="ℹ️ info"),
+    KeyboardButton("⬅️ Orqaga",),
+)
+
+settings_keyboard_ru = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 settings_keyboard_ru.add(
-    types.KeyboardButton(text="⚙️ изменение языка"),
-    types.KeyboardButton(text="ℹ️ info"),
-    types.KeyboardButton("📍Адрес"),
+    KeyboardButton(text="⚙️ изменение языка"),
+    KeyboardButton(text="ℹ️ info"),
+    KeyboardButton("⬅️ Назад"),
 )
