@@ -12,8 +12,6 @@ databs = DB('db.json')
 
 @dp.message_handler(CommandStart())
 async def start(message: types.Message):
-    # if databs.get_user(message.from_user.id):
-    #     await message.answer("Kurslarni tanlang", reply_markup=keyboard_uz)
     await message.answer(
         text=f"Salom {message.from_user.full_name}!\nBotdan foydalanish uchun tilni tanlang",
         reply_markup=keyboard
@@ -24,6 +22,7 @@ async def start(message: types.Message):
 async def lang_user_callback(call: types.CallbackQuery, state: FSMContext):
     lang = call.data
     if databs.get_user(call.from_user.id) is None:
+        databs.add_user(call.from_user.id, lang)
         if lang == 'uz':
             await call.message.answer("Bo‘limni tanlang:", reply_markup=keyboard_uz)
         else:

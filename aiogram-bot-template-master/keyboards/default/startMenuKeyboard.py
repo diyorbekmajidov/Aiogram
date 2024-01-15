@@ -1,6 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-
 keyboard_uz = ReplyKeyboardMarkup(
     keyboard = [
         [KeyboardButton(text="Kurslarimiz")],
@@ -27,7 +26,6 @@ keyboard_ru = ReplyKeyboardMarkup(
 )
 
 
-
 settings_keyboard_uz = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 settings_keyboard_uz.add(
     KeyboardButton(text="⚙️ tillni almashtirish"),
@@ -40,4 +38,20 @@ settings_keyboard_ru.add(
     KeyboardButton(text="⚙️ изменение языка"),
     KeyboardButton(text="ℹ️ info"),
     KeyboardButton("⬅️ Назад"),
+)
+
+location_keyboard_uz = ReplyKeyboardMarkup(
+    keyboard = [
+        [KeyboardButton(text='Yagona daricha ')],  # city id in v
+        [KeyboardButton(text='37-maktab oldida')],
+        [KeyboardButton("⬅️ Orqaga",),]
+    ]
+)
+
+location_keyboard_ru = ReplyKeyboardMarkup(
+    keyboard = [
+        [KeyboardButton(text='Единое окно')],  # city id in v
+        [KeyboardButton(text='37-maktab ru')],
+        [KeyboardButton("⬅️ Назад")]
+    ]
 )
