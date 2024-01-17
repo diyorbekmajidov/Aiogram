@@ -12,11 +12,13 @@ from .start import databs
 @dp.message_handler(text=["⚙️ Texnik yordam", "⚙️ Техническая поддержка:"])
 async def settings_bot(message: types.Message, state=None):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
+        await message.delete()
         await message.answer(
             text="⚙️ Sozlamalar!!!",
             reply_markup=settings_keyboard_uz
         )
     else:
+        await message.delete()
         await message.answer(
             text="⚙️ Sozlamalar!!!",
             reply_markup=settings_keyboard_ru
@@ -24,6 +26,7 @@ async def settings_bot(message: types.Message, state=None):
 
 @dp.message_handler(text=["⚙️ tillni almashtirish", "⚙️ изменение языка"], state=None)
 async def update_lang(message: types.Message):
+    await message.delete()
     await message.answer(
             text="O'zgartirishni xohlagan tilizni tanlang!!!",
             reply_markup=keyboard
@@ -49,4 +52,4 @@ async def back_menu(message: types.Message):
     if user_info=='uz':
         await message.answer("Siz avvalgi sahifaga qaytdingiz.", reply_markup=keyboard_uz)
     else:
-        message.answer("Choose the section:\n\n", reply_markup=keyboard_ru)
+        message.answer("Вы вернулись на домашнюю страницу.", reply_markup=keyboard_ru)
