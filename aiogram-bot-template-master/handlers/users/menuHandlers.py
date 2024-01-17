@@ -50,6 +50,6 @@ async def update_lang_callback(call: types.CallbackQuery, state: FSMContext):
 async def back_menu(message: types.Message):
     user_info = databs.get_user(message.from_user.id)['lang']
     if user_info=='uz':
-        await message.answer("Siz avvalgi sahifaga qaytdingiz.", reply_markup=keyboard_uz)
+        await message.answer("Siz bosh  sahifaga qaytdingiz.", reply_markup=keyboard_uz)
     else:
         message.answer("Вы вернулись на домашнюю страницу.", reply_markup=keyboard_ru)

@@ -1,2 +1,0 @@
-python-dotenv
-aiogram==2.23.1

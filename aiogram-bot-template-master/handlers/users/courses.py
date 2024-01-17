@@ -11,7 +11,6 @@ async def settings_bot(message: types.Message, state=None):
             text="Kurslar ruyhati",
             reply_markup=coursesMenu
         )
-        await message.answer(cache_time=60)
     else:
         await message.delete()
         await message.answer(
