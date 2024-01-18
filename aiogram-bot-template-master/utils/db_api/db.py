@@ -21,15 +21,28 @@ class DB:
         if lang:
             self.user.update({'lang': lang}, doc_ids=[chat_id])
         
-    def add_cource_user(self, chat_id, username,course_name):
-        self.user_cource.insertDocument({
+    def add_course_user(self, chat_id, username, courses, phonenumber):
+        self.user_cource.insert(Document({
             'chat_id': chat_id,
             'username': username,
-            'course_name':course_name
-            }, doc_id=chat_id)
-        
-    def get_cource_user(self, chat_id):
-        return self.user_cource.get(doc_id=chat_id)
+            'courses': courses,  # Store courses as a list
+            'phonenumber': phonenumber
+        }, doc_id=chat_id))
+
+    def get_user_courses(self, chat_id):
+        user_info = self.user_cource.get(doc_id=chat_id)
+        return user_info.get('courses', []) if user_info else []
+    
+    def add_course_to_user(self, chat_id, course_name):
+        user_info = self.user_cource.get(doc_id=chat_id)
+
+        if user_info:
+            courses = user_info.get('courses', [])
+            if course_name not in courses:
+                courses.append(course_name)
+                self.user_cource.update({'courses': courses}, doc_ids=[chat_id])
+        else:
+            pass
 
 
 db = DB('db.json')

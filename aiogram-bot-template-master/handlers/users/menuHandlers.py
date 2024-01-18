@@ -12,21 +12,21 @@ from .start import databs
 @dp.message_handler(text=["⚙️ Texnik yordam", "⚙️ Техническая поддержка:"])
 async def settings_bot(message: types.Message, state=None):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
-        await message.delete()
         await message.answer(
             text="⚙️ Sozlamalar!!!",
             reply_markup=settings_keyboard_uz
         )
+        # await message.delete()
     else:
-        await message.delete()
         await message.answer(
             text="⚙️ Sozlamalar!!!",
             reply_markup=settings_keyboard_ru
         )
+        # await message.delete()
 
 @dp.message_handler(text=["⚙️ tillni almashtirish", "⚙️ изменение языка"], state=None)
 async def update_lang(message: types.Message):
-    await message.delete()
+    # await message.delete()
     await message.answer(
             text="O'zgartirishni xohlagan tilizni tanlang!!!",
             reply_markup=keyboard
@@ -43,7 +43,7 @@ async def update_lang_callback(call: types.CallbackQuery, state: FSMContext):
     else:
         await call.message.answer("Выберите раздел:", reply_markup=keyboard_ru)
     await call.answer(cache_time=60)
-    await call.message.delete()
+    # await call.message.delete()
     await state.finish()
 
 @dp.message_handler(text=["⬅️ Orqaga", "⬅️ Назад"])
@@ -51,5 +51,7 @@ async def back_menu(message: types.Message):
     user_info = databs.get_user(message.from_user.id)['lang']
     if user_info=='uz':
         await message.answer("Siz bosh  sahifaga qaytdingiz.", reply_markup=keyboard_uz)
+        # await message.delete()
     else:
         message.answer("Вы вернулись на домашнюю страницу.", reply_markup=keyboard_ru)
+        # await message.delete()
