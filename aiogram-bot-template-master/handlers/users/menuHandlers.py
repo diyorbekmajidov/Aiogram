@@ -4,8 +4,6 @@ from keyboards.default.startMenuKeyboard import settings_keyboard_uz, settings_k
 from aiogram.dispatcher import FSMContext
 from states.userlang_update import LanguagesUpdate
 from keyboards.inline.langkeyboard import keyboard
-import tracemalloc
-tracemalloc.start()
 
 from .start import databs
 
