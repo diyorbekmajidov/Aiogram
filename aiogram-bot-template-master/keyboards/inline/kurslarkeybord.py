@@ -42,16 +42,18 @@ back_button = InlineKeyboardButton(text="🔙 Назад", callback_data="course
 coursesMenu_ru.insert(back_button)
 
 
-course_registration_uz = ReplyKeyboardMarkup(
-    keyboard=[
-        [KeyboardButton("Kontaktingizni yuboring", request_contact=True)],
-        [KeyboardButton(text="🔙 Ortga qaytish",)]
-    ]
+keyboard = ReplyKeyboardMarkup(
+    keyboard = [
+        [
+            KeyboardButton(text='Contact', request_contact=True),
+        ],
+    ],
+    resize_keyboard=True
 )
 
 course_registaration_ru = ReplyKeyboardMarkup(
     keyboard = [
-        [KeyboardButton("Отправьте свой контакт",request_contact=True)],
-        [KeyboardButton(text="🔙 Назад",)]
+        [InlineKeyboardButton("Отправьте свой контакт",request_contact=True)],
+        [InlineKeyboardButton(text="🔙 Назад",)]
     ]
 )
