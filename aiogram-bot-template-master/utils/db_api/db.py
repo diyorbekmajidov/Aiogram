@@ -1,5 +1,6 @@
 from tinydb import TinyDB, Query
 from tinydb.database import Document
+import uuid
 
 class DB:
     def __init__(self, path) -> None:
@@ -20,29 +21,25 @@ class DB:
     def update_user(self, chat_id, lang=None,):
         if lang:
             self.user.update({'lang': lang}, doc_ids=[chat_id])
-        
-    def add_course_user(self, chat_id, username, courses, phonenumber):
-        self.user_cource.insert(Document({
-            'chat_id': chat_id,
-            'username': username,
-            'courses': courses,  # Store courses as a list
-            'phonenumber': phonenumber
-        }, doc_id=chat_id))
 
-    def get_user_courses(self, chat_id):
-        user_info = self.user_cource.get(doc_id=chat_id)
-        return user_info.get('courses', []) if user_info else []
+            
+    def add_course_user(self, chat_id, username, courses, phonenumber):    
+        doc_id = f"{chat_id}_{courses}"
+
+        # Check if doc_id already exists in the table
+        if not self.user_cource.contains(self.query.doc_id == doc_id):
+            self.user_cource.insert({
+                'doc_id': doc_id,
+                'chat_id': chat_id,
+                'username': username,
+                'course': courses,
+                'phonenumber': phonenumber
+            })
+
+    def get_user_course(self, chat_id):
+        user_courses = self.user_cource.search(self.query.chat_id == chat_id)
+        return user_courses
     
-    def add_course_to_user(self, chat_id, course_name):
-        user_info = self.user_cource.get(doc_id=chat_id)
-
-        if user_info:
-            courses = user_info.get('courses', [])
-            if course_name not in courses:
-                courses.append(course_name)
-                self.user_cource.update({'courses': courses}, doc_ids=[chat_id])
-        else:
-            pass
 
 
 db = DB('db.json')

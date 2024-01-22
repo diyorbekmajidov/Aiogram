@@ -4,5 +4,21 @@
             "chat_id": 1066527771,
             "lang": "uz"
         }
+    },
+    "user_cources": {
+        "1": {
+            "doc_id": "1066527771_Ingliz tili",
+            "chat_id": 1066527771,
+            "username": "ds",
+            "course": "Ingliz tili",
+            "phonenumber": "998997444358"
+        },
+        "2": {
+            "doc_id": "1066527771_Umumiy matematika",
+            "chat_id": 1066527771,
+            "username": "dsaf",
+            "course": "Umumiy matematika",
+            "phonenumber": "998997444358"
+        }
     }
 }
