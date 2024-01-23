@@ -33,7 +33,17 @@ async def buying_course(call: types.CallbackQuery, state: FSMContext):
         await Userdata.next()
 
     else:
-        pass
+        course = call.data
+        lang={'SAT':'СИДЕЛ', 'Umumiy matematika':'Общая математика',
+              'Bolalar uchun matematika':'Математика для детей',
+              'Ingliz tili':'английский язык', 'DTM':'ДТМ'}
+        await state.update_data(
+            {"coursename": course}
+        )
+        course=course.split(':')[1]
+        await call.message.answer(
+            f"Ты {course} выбрали курс.\n Если хотите выиграть в списке\n Введите свое полное имя...", )
+        await Userdata.next()
 
 @dp.message_handler(state=Userdata.fullname)
 async def answer_email(message: types.Message, state: FSMContext):
@@ -50,8 +60,13 @@ async def get_contact(message: types.Message,state: FSMContext):
     data = await state.get_data()
     username = data.get("name")
     courses = data.get("coursename")
+    course = courses.split(':')[1]
     phonenumber = message.contact.phone_number
-    databs.add_course_user(message.from_user.id,username,courses.split(':')[1],phonenumber)
+    chat_id = message.from_user.id
+    if databs.get_user_coursename(f"{chat_id}_{course}") is not None:
+        databs.update_user_course(chat_id, course,username)
+    # else add to user on data base
+    databs.add_course_user(chat_id,username,course,phonenumber)
     contact = message.contact
     await message.answer(
         f"Rahmat, <b>{contact.full_name}</b>.\n"
@@ -64,23 +79,28 @@ async def get_contact(message: types.Message,state: FSMContext):
 async def cansel_course(message: types.Message, state=None):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
         data=databs.get_user_course(message.from_user.id)
-        print(data)
-        await message.answer(
-            text="Kurslar ruyhati",
-            reply_markup=coursesMenu)
-        await state.finish()
+        text=''
+        if data is not None:
+            for i in data:
+                text +=f"\n {data.index(i)+1}.{i['course']}"
+            await message.answer(
+            text=f"Sizning kurslaringiz ruyhati:\n{text}",
+            )
+        # await state.finish()
 
-@dp.message_handler(text=['🔙 Ortga qaytish','🔙 Назад'])
-async def cansel_course(message: types.Message, state=None):
-    if databs.get_user(message.from_user.id)['lang'] == "uz":
-        await message.answer(
-            text="Kurslar ruyhati",
-            reply_markup=coursesMenu)
-    else:
-        await message.answer(
-            text="Kurslar ruyhati",
-            reply_markup=coursesMenu_ru
-        )
+# @dp.message_handler(text=['🔙 Ortga qaytish','🔙 Назад'])
+# async def cansel_course(message: types.Message, state=None):
+#     if databs.get_user(message.from_user.id)['lang'] == "uz":
+#         await message.answer(
+#             text="Kurslar ruyhati",
+#             reply_markup=coursesMenu)
+#         await state.finish()
+#     else:
+#         await message.answer(
+#             text="Kurslar ruyhati",
+#             reply_markup=coursesMenu_ru
+#         )
+#         await state.finish()
 
 @dp.callback_query_handler(course_callback.filter(item_name=['cancel']))
 async def cansel_menu(call: types.CallbackQuery):

@@ -19,6 +19,30 @@
             "username": "dsaf",
             "course": "Umumiy matematika",
             "phonenumber": "998997444358"
+        },
+        "3": {
+            "doc_id": "1066527771_DTM",
+            "chat_id": 1066527771,
+            "username": "wefsd",
+            "course": "DTM",
+            "phonenumber": "998997444358"
+        },
+        "4": {
+            "doc_id": "(1066527771, 'Diyorbek')_DTM",
+            "chat_id": [
+                1066527771,
+                "Diyorbek"
+            ],
+            "username": "Diyorbek",
+            "course": "DTM",
+            "phonenumber": "998997444358"
+        },
+        "5": {
+            "doc_id": "1066527771_SAT",
+            "chat_id": 1066527771,
+            "username": "Diy",
+            "course": "SAT",
+            "phonenumber": "998997444358"
         }
     }
 }

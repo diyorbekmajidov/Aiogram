@@ -36,9 +36,28 @@ class DB:
                 'phonenumber': phonenumber
             })
 
+    def update_user_course(self, chat_id, new_courses, username):
+        doc_id = f"{chat_id}_{new_courses}"
+
+        # Check if doc_id already exists in the table
+        if self.user_cource.contains(self.query.doc_id == doc_id):
+            # Update the existing document
+            self.user_cource.update({'course': new_courses,'username':username}, self.query.doc_id == doc_id)
+        else:
+            # Handle the case when the document does not exist
+            print(f"Document with doc_id {doc_id} does not exist.")
+
     def get_user_course(self, chat_id):
         user_courses = self.user_cource.search(self.query.chat_id == chat_id)
         return user_courses
+    
+    def get_user_coursename(self,doc_id):
+        user_coursename= self.user_cource.search(self.query.doc_id == doc_id)
+        return user_coursename
+    
+    def get_user_all(self):
+        all_users = self.user_cource.all()
+        return all_users
     
 
 

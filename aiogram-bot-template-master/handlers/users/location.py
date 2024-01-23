@@ -11,7 +11,7 @@ async def settings_bot(message: types.Message, state=None):
             text="Filialni tanlang:",
             reply_markup=location_keyboard_uz
         )
-        await message.answer(cache_time=60)
+        # await message.answer(cache_time=60)
     else:
         # await message.delete()
         await message.answer(
