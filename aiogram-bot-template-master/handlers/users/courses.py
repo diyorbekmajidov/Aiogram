@@ -86,6 +86,8 @@ async def cansel_course(message: types.Message, state=None):
             await message.answer(
             text=f"Sizning kurslaringiz ruyhati:\n{text}",
             )
+    else:
+        pass
         # await state.finish()
 
 # @dp.message_handler(text=['🔙 Ortga qaytish','🔙 Назад'])
@@ -108,8 +110,10 @@ async def cansel_menu(call: types.CallbackQuery):
         await call.message.answer(
             text="Kurslar ruyhati",
             reply_markup=keyboard_uz)
+        await call.message.delete()
     else:
         await call.message.answer(
             text="Список курсов",
             reply_markup=keyboard_ru
         )
+        await call.message.delete()

@@ -7,7 +7,7 @@ admin_kurs = ReplyKeyboardMarkup(
             KeyboardButton(text="Post yaratish")]]
             ,resize_keyboard=True)
 
-admin_post = ReplyKeyboardMarkup(
+admin_postButton = ReplyKeyboardMarkup(
     keyboard = [
        [ KeyboardButton("Text"),
          KeyboardButton("photo")],

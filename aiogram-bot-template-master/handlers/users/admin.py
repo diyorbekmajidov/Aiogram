@@ -1,5 +1,5 @@
 from aiogram import types
-from keyboards.default.adminKeyboard import admin_kurs
+from keyboards.default.adminKeyboard import admin_kurs,admin_postButton
 
 from loader import dp, bot
 from .start import databs
@@ -20,5 +20,29 @@ async def Kurs_Statistika(message:types.Message):
     }
     for i in data:
         course_data[i['course']]+=1
-    print(course_data)
-    await message.answer('admin page')
+    text = course_data.items()
+    t=''
+    k=1
+    for j in text:
+        t+=f'{k}. {j[0]} : {j[1]}\n'
+        k+=1
+    await message.answer(f'{t}')
+
+@dp.message_handler(text='Post yaratish')
+async def Kurs_Statistika(message:types.Message):
+    await message.answer('Qaysi turdagi xabar yuborishni tanlang!!!', reply_markup=admin_postButton)
+
+@dp.message_handler(text='photo')
+async def Post_rasm(message:types.Message):
+    print(message)
+    await message.answer('rasimni yuboring')
+
+@dp.message_handler(content_types=types.ContentType.ANY)
+async def get_file_id_p(message: types.Message):
+    print(message)
+    if message.photo:
+        await message.reply(message.photo[-1].file_id)
+    elif message.video:
+        await message.reply(message.document.file_id)
+    else:
+        await message.answer('Salom')
