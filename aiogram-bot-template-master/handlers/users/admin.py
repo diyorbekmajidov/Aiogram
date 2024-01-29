@@ -1,5 +1,12 @@
 from aiogram import types
-from keyboards.default.adminKeyboard import admin_kurs,admin_postButton
+from keyboards.default.adminKeyboard import admin_kurs,post_true_or_false
+from aiogram.dispatcher import FSMContext
+from states.post_state import PostStates
+from .start import databs
+import logging
+
+# Add this at the beginning of your code
+logging.basicConfig(level=logging.DEBUG)
 
 from loader import dp, bot
 from .start import databs
@@ -25,24 +32,73 @@ async def Kurs_Statistika(message:types.Message):
     k=1
     for j in text:
         t+=f'{k}. {j[0]} : {j[1]}\n'
-        k+=1
+        k+= 1
     await message.answer(f'{t}')
 
 @dp.message_handler(text='Post yaratish')
-async def Kurs_Statistika(message:types.Message):
-    await message.answer('Qaysi turdagi xabar yuborishni tanlang!!!', reply_markup=admin_postButton)
+async def Kurs_Statistika(message:types.Message,state:None):
+    await message.answer('Qaysi turdagi xabar yuborishni hohlasangiz Ushani yuboring!!!', )
+    await PostStates.post.set()
 
-@dp.message_handler(text='photo')
-async def Post_rasm(message:types.Message):
-    print(message)
-    await message.answer('rasimni yuboring')
 
-@dp.message_handler(content_types=types.ContentType.ANY)
-async def get_file_id_p(message: types.Message):
-    print(message)
+@dp.message_handler(content_types=types.ContentType.ANY, state=PostStates.post)
+async def get_file_id_p(message: types.Message, state: FSMContext):
     if message.photo:
-        await message.reply(message.photo[-1].file_id)
+        await state.update_data({"post": message.photo[-1].file_id, "caption":message.caption, "type":"photo"})
+
+        await message.reply("post qabul qilindi\n uni yuborish holasangiz ha tugmasini bosing akis holda yuq") 
+        await message.answer("sd", reply_markup=post_true_or_false)
+
+        await PostStates.save_post.set()
+
     elif message.video:
-        await message.reply(message.document.file_id)
+        await state.update_data({"post": message.video.file_id,"caption":message.caption, "type":"video"})
+        await message.reply("post qabul qilindi\n uni yuborish holasangiz ha tugmasini bosing akis holda yuq", reply_markup=post_true_or_false)
+        await PostStates.save_post.set()
+
+    elif message.poll:
+        question = message.poll.question
+        options = [x.text for x in message.poll.options]
+        await state.update_data({"post":question ,"options":options, "type":"poll"})
+        await message.reply("post qabul qilindi\n uni yuborish holasangiz ha tugmasini bosing akis holda yuq", reply_markup=post_true_or_false)
+        await PostStates.save_post.set()
     else:
-        await message.answer('Salom')
+        await state.update_data({"post": message.text, "type":"text"})
+        await message.reply("post qabul qilindi\n uni yuborish holasangiz ha tugmasini bosing akis holda yuq", reply_markup=post_true_or_false)
+        await PostStates.save_post.set()
+
+@dp.message_handler(text=['Ha','Yuq'], state=PostStates.save_post)
+async def get_file_id_save_post(message:types.Message,state: FSMContext):
+    if message.text=='Ha':
+        data = await state.get_data()
+        type = data['type']
+        post = data['post']
+        get_userdata= databs.get_alluser()
+        if type=='photo':
+            caption=data['caption']
+            for user in get_userdata:
+                await bot.send_photo(user['chat_id'], post, caption)
+            await state.finish()
+            await message.answer('admin page', reply_markup=admin_kurs)
+        elif type=='video':
+            caption=data['caption']
+            for user in get_userdata:
+                await bot.send_video(user['chat_id'], post, caption)
+            await state.finish()
+            await message.answer('admin page', reply_markup=admin_kurs)
+        elif type=='poll':
+            options = data['options']
+            await bot.send_poll(message.from_user.id, post, options)
+            await state.finish()
+            await message.answer('admin page', reply_markup=admin_kurs)
+        elif type == 'text':
+            for user in get_userdata:
+                await bot.send_message(user['chat_id'], post)
+            await state.finish()
+            await message.answer('admin page', reply_markup=admin_kurs)
+
+        
+    else:
+        await message.answer('Post bekor qilindi.')
+        await message.answer('admin page', reply_markup=admin_kurs)
+        await state.finish()

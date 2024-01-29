@@ -17,6 +17,9 @@ class DB:
 
     def get_user(self, chat_id):
         return self.user.get(doc_id=chat_id)
+    
+    def get_alluser(self):
+        return self.user.all()
 
     def update_user(self, chat_id, lang=None,):
         if lang:

@@ -7,6 +7,10 @@
         "675754979": {
             "chat_id": 675754979,
             "lang": "uz"
+        },
+        "5904819098": {
+            "chat_id": 5904819098,
+            "lang": "uz"
         }
     },
     "user_cources": {
@@ -37,6 +41,20 @@
             "username": "hfsxzxfgfhggf",
             "course": "DTM",
             "phonenumber": "998997444358"
+        },
+        "5": {
+            "doc_id": "1066527771_SAT",
+            "chat_id": 1066527771,
+            "username": "\u2699\ufe0f Texnik yordam",
+            "course": "SAT",
+            "phonenumber": "998997444358"
+        },
+        "6": {
+            "doc_id": "5904819098_Ingliz tili",
+            "chat_id": 5904819098,
+            "username": "\u2699\ufe0f Texnik yordam",
+            "course": "Ingliz tili",
+            "phonenumber": "+998947434773"
         }
     }
 }

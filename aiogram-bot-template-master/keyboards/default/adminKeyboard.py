@@ -18,3 +18,11 @@ admin_postButton = ReplyKeyboardMarkup(
 
 )
 
+post_true_or_false = ReplyKeyboardMarkup(
+    keyboard = [
+        [
+            KeyboardButton("Ha"),
+            KeyboardButton('Yuq')]
+        ],resize_keyboard=True
+)
+
