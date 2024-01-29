@@ -9,10 +9,11 @@ class DB:
         self.user = self.db.table('user_lang')
         self.user_cource = self.db.table('user_cources') 
 
-    def add_user(self, chat_id, lang=None):
+    def add_user(self, chat_id, lang=None, admin=None):
         self.user.insert(Document({
             'chat_id': chat_id,
-            'lang': lang
+            'lang': lang,
+            'admin':admin
             }, doc_id=chat_id))
 
     def get_user(self, chat_id):
@@ -21,10 +22,9 @@ class DB:
     def get_alluser(self):
         return self.user.all()
 
-    def update_user(self, chat_id, lang=None,):
+    def update_user(self, chat_id, lang=None, admin=None):
         if lang:
-            self.user.update({'lang': lang}, doc_ids=[chat_id])
-
+            self.user.update({'lang': lang,'admin':admin}, doc_ids=[chat_id])
             
     def add_course_user(self, chat_id, username, courses, phonenumber):    
         doc_id = f"{chat_id}_{courses}"

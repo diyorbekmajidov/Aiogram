@@ -20,6 +20,22 @@ async def settings_bot(message: types.Message, state=None):
         )
         await Userdata.courseName.set()
 
+@dp.callback_query_handler(course_callback.filter(item_name=['cancel']),state='*')
+async def cansel_menu(call: types.CallbackQuery, state: FSMContext):
+    if databs.get_user(call.from_user.id)['lang'] == "uz":
+        await call.message.answer(
+            text="Kurslar ruyhati",
+            reply_markup=keyboard_uz)
+        await state.finish()
+        await call.message.delete()
+    else:
+        await call.message.answer(
+            text="Список курсов",
+            reply_markup=keyboard_ru
+        )
+        await state.finish()
+        await call.message.delete()
+
 @dp.callback_query_handler(course_callback.filter(item_name=['SAT', 'Umumiy matematika','Bolalar uchun matematika','Ingliz tili', 'DTM']), state=Userdata.courseName)
 async def buying_course(call: types.CallbackQuery, state: FSMContext):
     if databs.get_user(call.from_user.id)['lang'] == 'uz':
@@ -42,7 +58,7 @@ async def buying_course(call: types.CallbackQuery, state: FSMContext):
         )
         course=course.split(':')[1]
         await call.message.answer(
-            f"Ты {course} выбрали курс.\n Если хотите выиграть в списке\n Введите свое полное имя...", )
+            f"Ты {lang[course]} выбрали курс.\n Если хотите выиграть в списке\n Введите свое полное имя...", )
         await Userdata.next()
 
 @dp.message_handler(state=Userdata.fullname)

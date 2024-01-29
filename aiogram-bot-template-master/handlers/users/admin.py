@@ -2,18 +2,24 @@ from aiogram import types
 from keyboards.default.adminKeyboard import admin_kurs,post_true_or_false
 from aiogram.dispatcher import FSMContext
 from states.post_state import PostStates
+from states.add_to_admin_state import Add_AdminStates
 from .start import databs
 import logging
+import os
 
 # Add this at the beginning of your code
 logging.basicConfig(level=logging.DEBUG)
 
 from loader import dp, bot
 from .start import databs
+from data.config import ADMINS
 
 @dp.message_handler(commands="admin")
 async def admin_page(message: types.Message):
-    await message.answer('admin page', reply_markup=admin_kurs)
+    if str(message.from_user.id) in ADMINS:
+        await message.answer('admin page', reply_markup=admin_kurs)
+    else:
+        await message.answer('Siz xato buyruq yubordingiz')
 
 @dp.message_handler(text='Kurslar Statistika')
 async def Kurs_Statistika(message:types.Message):
@@ -39,6 +45,27 @@ async def Kurs_Statistika(message:types.Message):
 async def Kurs_Statistika(message:types.Message,state:None):
     await message.answer('Qaysi turdagi xabar yuborishni hohlasangiz Ushani yuboring!!!', )
     await PostStates.post.set()
+
+@dp.message_handler(text="🛠 Admin qushish")
+async def Addto_admin(message:types.Message):
+    await message.answer('Admin qushish uchun uning chat_id raqamini yuboring')
+    await Add_AdminStates.admin.set()
+
+@dp.message_handler(state=Add_AdminStates.admin)
+async def add_admin(message: types.Message, state:FSMContext):
+    try:
+        admin = message.text
+        user = databs.get_user(int(message.text))
+        print(user)
+        if user is not None:
+            print(33)
+            databs.update_user(int(user['chat_id']),admin=admin)
+            print(databs.get_user(int(message.text)))
+            await message.answer("Admin mufaqliy qushildi!")
+            await state.finish()
+    except:
+        await message.answer('Bunday  foydalanuvchi topilmadi!')
+        await state.finish()
 
 
 @dp.message_handler(content_types=types.ContentType.ANY, state=PostStates.post)
