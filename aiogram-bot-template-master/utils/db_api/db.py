@@ -8,6 +8,7 @@ class DB:
         self.query = Query()
         self.user = self.db.table('user_lang')
         self.user_cource = self.db.table('user_cources') 
+        self.free_lesson = self.db.table('free_lesson')
 
     def add_user(self, chat_id, lang=None, admin=None):
         self.user.insert(Document({
@@ -15,6 +16,14 @@ class DB:
             'lang': lang,
             'admin':admin
             }, doc_id=chat_id))
+        
+    def add_free_lesson(self, name_uz,name_ru,link):
+        self.free_lesson.insert(Document({
+            'name_uz':name_uz,
+            'name_ru':name_ru,
+            'link':link
+        })
+    )
 
     def get_user(self, chat_id):
         return self.user.get(doc_id=chat_id)
@@ -24,7 +33,9 @@ class DB:
 
     def update_user(self, chat_id, lang=None, admin=None):
         if lang:
-            self.user.update({'lang': lang,'admin':admin}, doc_ids=[chat_id])
+            self.user.update({'lang': lang}, doc_ids=[chat_id])
+        if admin:
+            self.user.update({'admin':admin}, doc_ids=[chat_id])
             
     def add_course_user(self, chat_id, username, courses, phonenumber):    
         doc_id = f"{chat_id}_{courses}"

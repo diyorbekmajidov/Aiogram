@@ -16,7 +16,8 @@ from data.config import ADMINS
 
 @dp.message_handler(commands="admin")
 async def admin_page(message: types.Message):
-    if str(message.from_user.id) in ADMINS:
+    chat_id=message.from_user.id
+    if str(chat_id) in ADMINS or str(databs.get_user(chat_id)['admin'])==str(chat_id):
         await message.answer('admin page', reply_markup=admin_kurs)
     else:
         await message.answer('Siz xato buyruq yubordingiz')

@@ -55,3 +55,15 @@ location_keyboard_ru = ReplyKeyboardMarkup(
         [KeyboardButton("⬅️ Назад")]
     ]
 )
+
+back_botton_uz = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton("⬅Orqaga",),]
+    ]
+)
+
+back_botton_ru = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton("⬅Назад",),]
+    ]
+)

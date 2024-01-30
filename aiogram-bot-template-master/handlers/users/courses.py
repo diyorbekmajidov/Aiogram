@@ -3,7 +3,7 @@ from loader import dp, bot
 from .start import databs
 from keyboards.inline.callback_data import course_callback
 from keyboards.inline.kurslarkeybord import coursesMenu, coursesMenu_ru, keyboard
-from keyboards.default.startMenuKeyboard import keyboard_ru, keyboard_uz
+from keyboards.default.startMenuKeyboard import keyboard_ru, keyboard_uz, back_botton_uz, back_botton_ru
 from states.user_course import Userdata
 from aiogram.dispatcher import FSMContext
 @dp.message_handler(text=["Kurslarimiz", "Наши курсы"])
@@ -44,7 +44,9 @@ async def buying_course(call: types.CallbackQuery, state: FSMContext):
             {"coursename": course}
         )
         await call.message.answer(
-            f"Siz {course.split(':')[1]}  Kursini tanladingiz.\nRuyhatda utishni istasangiz \nTo'liq ismingizni kiriting ...", )
+            f"Siz {course.split(':')[1]}  Kursini tanladingiz.\nRuyhatda utishni istasangiz \nTo'liq ismingizni kiriting ...", 
+            reply_markup=back_botton_uz
+            )
 
         await Userdata.next()
 
@@ -60,6 +62,22 @@ async def buying_course(call: types.CallbackQuery, state: FSMContext):
         await call.message.answer(
             f"Ты {lang[course]} выбрали курс.\n Если хотите выиграть в списке\n Введите свое полное имя...", )
         await Userdata.next()
+
+@dp.message_handler(text=['⬅Orqaga',"⬅Назад"],state='*')
+async def back_to_menu(msg:types.Message,state:FSMContext):
+    if databs.get_user(msg.from_user.id)['lang'] == "uz":
+        await msg.answer(
+            text="Kurslar ruyhati",
+            reply_markup=keyboard_uz)
+        await state.finish()
+        await msg.delete()
+    else:
+        await msg.answer(
+            text="Список курсов",
+            reply_markup=keyboard_ru
+        )
+        await state.finish()
+        await msg.delete()
 
 @dp.message_handler(state=Userdata.fullname)
 async def answer_email(message: types.Message, state: FSMContext):

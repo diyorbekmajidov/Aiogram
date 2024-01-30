@@ -51,5 +51,5 @@ async def back_menu(message: types.Message):
         await message.answer("Siz bosh  sahifaga qaytdingiz.", reply_markup=keyboard_uz)
         # await message.delete()
     else:
-        message.answer("Вы вернулись на домашнюю страницу.", reply_markup=keyboard_ru)
+        await message.answer("Вы вернулись на домашнюю страницу.", reply_markup=keyboard_ru)
         # await message.delete()
