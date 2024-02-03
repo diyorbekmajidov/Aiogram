@@ -14,17 +14,14 @@ async def settings_bot(message: types.Message, state=None):
             text="⚙️ Sozlamalar!!!",
             reply_markup=settings_keyboard_uz
         )
-        # await message.delete()
     else:
         await message.answer(
             text="⚙️ Sozlamalar!!!",
             reply_markup=settings_keyboard_ru
         )
-        # await message.delete()
 
 @dp.message_handler(text=["⚙️ tillni almashtirish", "⚙️ изменение языка"], state=None)
 async def update_lang(message: types.Message):
-    # await message.delete()
     await message.answer(
             text="O'zgartirishni xohlagan tilizni tanlang!!!",
             reply_markup=keyboard
@@ -49,7 +46,5 @@ async def back_menu(message: types.Message):
     user_info = databs.get_user(message.from_user.id)['lang']
     if user_info=='uz':
         await message.answer("Siz bosh  sahifaga qaytdingiz.", reply_markup=keyboard_uz)
-        # await message.delete()
     else:
         await message.answer("Вы вернулись на домашнюю страницу.", reply_markup=keyboard_ru)
-        # await message.delete()

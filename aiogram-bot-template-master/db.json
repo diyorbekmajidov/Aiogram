@@ -20,7 +20,7 @@
         "1": {
             "doc_id": "1066527771_DTM",
             "chat_id": 1066527771,
-            "username": "Diyor",
+            "username": "diyorbek",
             "course": "DTM",
             "phonenumber": "998997444358"
         },
@@ -34,8 +34,15 @@
         "3": {
             "doc_id": "1066527771_Umumiy matematika",
             "chat_id": 1066527771,
-            "username": "Diyorbek",
+            "username": "adsf",
             "course": "Umumiy matematika",
+            "phonenumber": "998997444358"
+        },
+        "4": {
+            "doc_id": "1066527771_SAT",
+            "chat_id": 1066527771,
+            "username": "sdafas",
+            "course": "SAT",
             "phonenumber": "998997444358"
         }
     },

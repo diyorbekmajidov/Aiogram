@@ -26,15 +26,13 @@ async def admin_page(message: types.Message):
 
 @dp.message_handler(text='Bepul darslar qushish', state=None)
 async def handler1(message: types.Message):
-    await message.answer("Qushmoqchi bulgan kursingi nomini yozib yuboring uzbek tilida",
+    await message.answer("Qushmoqchi bulgan kursingi nomini yozib yuboring <b>uzbek tilida</b>",
                          reply_markup=back_admin_keyboard)
     await FreeLesson_State.name_uz.set()
 
 @dp.message_handler(text='◀️ Orqaga',state='*')
 async def back_admin(message:types.Message,state:FSMContext):
-    
     chat_id=message.from_user.id
-    
     await message.answer('admin page', reply_markup=admin_kurs)
     await state.finish()
 
@@ -42,14 +40,14 @@ async def back_admin(message:types.Message,state:FSMContext):
 async def handler2(message:types.Message, state:FSMContext):
     name_uz = message.text
     await state.update_data({'name_uz':name_uz})
-    await message.answer("Qushmoqchi bulgan kursingi nomini yozib yuboring rus tilida")
+    await message.answer("Qushmoqchi bulgan kursingi nomini yozib yuboring <b>rus </b>tilida")
     await FreeLesson_State.name_ru.set()
 
 @dp.message_handler(state=FreeLesson_State.name_ru)
 async def check_name_ru(message: types.Message, state: FSMContext):
     name_ru = message.text
     await state.update_data({'name_ru':name_ru})
-    await message.answer("Qushmoqchi bulgan kursingi link yuboring")
+    await message.answer("Qushmoqchi bulgan kursingi <b>link</b> yuboring")
     await FreeLesson_State.link.set()
 
 @dp.message_handler(state=FreeLesson_State.link)
@@ -86,13 +84,17 @@ async def Kurs_Statistika(message:types.Message):
 
 @dp.message_handler(text='Post yaratish')
 async def Kurs_Statistika(message:types.Message,state:None):
-    await message.answer(text='Qaysi turdagi xabar yuborishni hohlasangiz Ushani yuboring!!!', 
+    await message.answer('Botda 4 turdagi habar yubora olasiz bular:\n'
+                         '<b>1.Text\n2.Rasim  (jpg)\n3.Video (mp4)\n4.Poll</b>\n'
+                         'Agar siz ushbu turdagi xabarni yuborsangiz, bot barcha foydalanuvchilarga yuboriladi'
+                         ,parse_mode=types.ParseMode.HTML,
                          reply_markup=back_admin_keyboard)
     await PostStates.post.set()
 
 @dp.message_handler(text="🛠 Admin qushish")
 async def Addto_admin(message:types.Message):
-    await message.answer('Admin qushish uchun uning chat_id raqamini yuboring',
+    await message.answer('Admin qushish uchun uning chat_id raqamini yuboring'
+                         f"chat_id raqamini @MissRose_bot kirib\n star bosib /id buyruq orqali olishingiz mumkun va chat_id botga yuboring",
                          reply_markup=back_admin_keyboard
                          )
     await Add_AdminStates.admin.set()
@@ -118,7 +120,7 @@ async def get_file_id_p(message: types.Message, state: FSMContext):
     if message.photo:
         await state.update_data({"post": message.photo[-1].file_id, "caption":message.caption, "type":"photo"})
 
-        await message.reply("post qabul qilindi\n uni yuborish holasangiz ha tugmasini bosing akis holda yuq") 
+        await message.reply("post qabul qilindi\n uni yuborish holasangiz <b>ha</b> tugmasini bosing akis holda <b>yuq<b>") 
         await message.answer("sd", reply_markup=post_true_or_false)
 
         await PostStates.save_post.set()
@@ -149,26 +151,26 @@ async def get_file_id_save_post(message:types.Message,state: FSMContext):
         if type=='photo':
             caption=data['caption']
             for user in get_userdata:
-                await bot.send_photo(user['chat_id'], post, caption)
+                await bot.send_photo(user['chat_id'], post, caption=caption)
             await state.finish()
             await message.answer('admin page', reply_markup=admin_kurs)
         elif type=='video':
             caption=data['caption']
             for user in get_userdata:
-                await bot.send_video(user['chat_id'], post, caption)
+                await bot.send_video(user['chat_id'], post, caption=caption)
             await state.finish()
             await message.answer('admin page', reply_markup=admin_kurs)
         elif type=='poll':
             options = data['options']
-            await bot.send_poll(message.from_user.id, post, options)
+            for user in get_userdata:
+                await bot.send_poll(message.from_user.id, post, options)
             await state.finish()
             await message.answer('admin page', reply_markup=admin_kurs)
         elif type == 'text':
             for user in get_userdata:
                 await bot.send_message(user['chat_id'], post)
             await state.finish()
-            await message.answer('admin page', reply_markup=admin_kurs)
-        
+            await message.answer('admin page', reply_markup=admin_kurs)  
     else:
         await message.answer('Post bekor qilindi.')
         await message.answer('admin page', reply_markup=admin_kurs)

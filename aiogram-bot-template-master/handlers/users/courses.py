@@ -116,7 +116,7 @@ async def get_contact(message: types.Message,state: FSMContext):
         await state.finish()
     else :
         await message.answer(
-            "Спасибо, <b>{username}</b>.\n"
+            f"Спасибо, <b>{username}</b>.\n"
             f"Мы получили ваш {phonenumber}.\n Наш администратор свяжется c вами.",
             reply_markup=keyboard_ru
         )
