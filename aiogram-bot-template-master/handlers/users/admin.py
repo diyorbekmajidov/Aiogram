@@ -1,7 +1,8 @@
 from aiogram import types
-from keyboards.default.adminKeyboard import admin_kurs,post_true_or_false
+from keyboards.default.adminKeyboard import admin_kurs,post_true_or_false,back_admin_keyboard
 from aiogram.dispatcher import FSMContext
 from states.post_state import PostStates
+from states.free_lesson import FreeLesson_State
 from states.add_to_admin_state import Add_AdminStates
 from .start import databs
 import logging
@@ -21,6 +22,47 @@ async def admin_page(message: types.Message):
         await message.answer('admin page', reply_markup=admin_kurs)
     else:
         await message.answer('Siz xato buyruq yubordingiz')
+
+
+@dp.message_handler(text='Bepul darslar qushish', state=None)
+async def handler1(message: types.Message):
+    await message.answer("Qushmoqchi bulgan kursingi nomini yozib yuboring uzbek tilida",
+                         reply_markup=back_admin_keyboard)
+    await FreeLesson_State.name_uz.set()
+
+@dp.message_handler(text='◀️ Orqaga',state='*')
+async def back_admin(message:types.Message,state:FSMContext):
+    
+    chat_id=message.from_user.id
+    
+    await message.answer('admin page', reply_markup=admin_kurs)
+    await state.finish()
+
+@dp.message_handler(state=FreeLesson_State.name_uz)
+async def handler2(message:types.Message, state:FSMContext):
+    name_uz = message.text
+    await state.update_data({'name_uz':name_uz})
+    await message.answer("Qushmoqchi bulgan kursingi nomini yozib yuboring rus tilida")
+    await FreeLesson_State.name_ru.set()
+
+@dp.message_handler(state=FreeLesson_State.name_ru)
+async def check_name_ru(message: types.Message, state: FSMContext):
+    name_ru = message.text
+    await state.update_data({'name_ru':name_ru})
+    await message.answer("Qushmoqchi bulgan kursingi link yuboring")
+    await FreeLesson_State.link.set()
+
+@dp.message_handler(state=FreeLesson_State.link)
+async def check_link(message: types.Message, state:FSMContext):
+    link = message.text
+    await state.update_data({'link':link})
+    data = await state.get_data()
+    name_uz=data['name_uz']
+    name_ru=data['name_ru']
+    databs.add_free_lesson(name_ru=name_ru,name_uz=name_ru,link=link)
+    await message.answer('Kurs mufaqatli qushildi')
+    await state.finish()
+
 
 @dp.message_handler(text='Kurslar Statistika')
 async def Kurs_Statistika(message:types.Message):
@@ -44,12 +86,15 @@ async def Kurs_Statistika(message:types.Message):
 
 @dp.message_handler(text='Post yaratish')
 async def Kurs_Statistika(message:types.Message,state:None):
-    await message.answer('Qaysi turdagi xabar yuborishni hohlasangiz Ushani yuboring!!!', )
+    await message.answer(text='Qaysi turdagi xabar yuborishni hohlasangiz Ushani yuboring!!!', 
+                         reply_markup=back_admin_keyboard)
     await PostStates.post.set()
 
 @dp.message_handler(text="🛠 Admin qushish")
 async def Addto_admin(message:types.Message):
-    await message.answer('Admin qushish uchun uning chat_id raqamini yuboring')
+    await message.answer('Admin qushish uchun uning chat_id raqamini yuboring',
+                         reply_markup=back_admin_keyboard
+                         )
     await Add_AdminStates.admin.set()
 
 @dp.message_handler(state=Add_AdminStates.admin)
@@ -59,7 +104,6 @@ async def add_admin(message: types.Message, state:FSMContext):
         user = databs.get_user(int(message.text))
         print(user)
         if user is not None:
-            print(33)
             databs.update_user(int(user['chat_id']),admin=admin)
             print(databs.get_user(int(message.text)))
             await message.answer("Admin mufaqliy qushildi!")
@@ -124,9 +168,11 @@ async def get_file_id_save_post(message:types.Message,state: FSMContext):
                 await bot.send_message(user['chat_id'], post)
             await state.finish()
             await message.answer('admin page', reply_markup=admin_kurs)
-
         
     else:
         await message.answer('Post bekor qilindi.')
         await message.answer('admin page', reply_markup=admin_kurs)
         await state.finish()
+
+
+        

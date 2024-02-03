@@ -17,13 +17,19 @@ class DB:
             'admin':admin
             }, doc_id=chat_id))
         
-    def add_free_lesson(self, name_uz,name_ru,link):
-        self.free_lesson.insert(Document({
-            'name_uz':name_uz,
-            'name_ru':name_ru,
-            'link':link
-        })
-    )
+    def add_free_lesson(self, name_uz, name_ru, link):
+        new_lesson = {
+            'name_uz': name_uz,
+            'name_ru': name_ru,
+            'link': link
+        }
+
+        # insert metodidan foydalanib, yangi hujjatni qo'shish
+        doc_id = self.free_lesson.insert(new_lesson)
+        return doc_id
+    
+    def get_free_lesson(self):  
+        return self.free_lesson.all()
 
     def get_user(self, chat_id):
         return self.user.get(doc_id=chat_id)

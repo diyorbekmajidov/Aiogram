@@ -9,11 +9,13 @@ from aiogram.dispatcher import FSMContext
 @dp.message_handler(text=["Kurslarimiz", "Наши курсы"])
 async def settings_bot(message: types.Message, state=None):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
+        await message.answer("Another message with a new keyboard:", reply_markup=types.ReplyKeyboardRemove())
         await message.answer(
             text="Kurslar ruyhati",
             reply_markup=coursesMenu)
         await Userdata.courseName.set()
     else:
+        await message.answer("Another message with a new keyboard:", reply_markup=types.ReplyKeyboardRemove())
         await message.answer(
             text="Список курсов",
             reply_markup=coursesMenu_ru
@@ -27,14 +29,12 @@ async def cansel_menu(call: types.CallbackQuery, state: FSMContext):
             text="Kurslar ruyhati",
             reply_markup=keyboard_uz)
         await state.finish()
-        await call.message.delete()
     else:
         await call.message.answer(
             text="Список курсов",
             reply_markup=keyboard_ru
         )
         await state.finish()
-        await call.message.delete()
 
 @dp.callback_query_handler(course_callback.filter(item_name=['SAT', 'Umumiy matematika','Bolalar uchun matematika','Ingliz tili', 'DTM']), state=Userdata.courseName)
 async def buying_course(call: types.CallbackQuery, state: FSMContext):
@@ -47,7 +47,6 @@ async def buying_course(call: types.CallbackQuery, state: FSMContext):
             f"Siz {course.split(':')[1]}  Kursini tanladingiz.\nRuyhatda utishni istasangiz \nTo'liq ismingizni kiriting ...", 
             reply_markup=back_botton_uz
             )
-
         await Userdata.next()
 
     else:
@@ -63,6 +62,7 @@ async def buying_course(call: types.CallbackQuery, state: FSMContext):
             f"Ты {lang[course]} выбрали курс.\n Если хотите выиграть в списке\n Введите свое полное имя...", )
         await Userdata.next()
 
+
 @dp.message_handler(text=['⬅Orqaga',"⬅Назад"],state='*')
 async def back_to_menu(msg:types.Message,state:FSMContext):
     if databs.get_user(msg.from_user.id)['lang'] == "uz":
@@ -70,24 +70,31 @@ async def back_to_menu(msg:types.Message,state:FSMContext):
             text="Kurslar ruyhati",
             reply_markup=keyboard_uz)
         await state.finish()
-        await msg.delete()
     else:
         await msg.answer(
             text="Список курсов",
             reply_markup=keyboard_ru
         )
         await state.finish()
-        await msg.delete()
 
 @dp.message_handler(state=Userdata.fullname)
 async def answer_email(message: types.Message, state: FSMContext):
-    name = message.text
-    await state.update_data(
-        {"name": name}
-    )
-    await message.answer("Telefon raqam kiriting", reply_markup=keyboard)
+    if databs.get_user(message.from_user.id)['lang'] == "uz":
+        name = message.text
+        await state.update_data(
+            {"name": name}
+        )
+        await message.answer("Telefon raqamini kiritish uchun tugmani bosing", reply_markup=keyboard)
 
-    await Userdata.next()
+        await Userdata.next()
+    else:
+        name = message.text
+        await state.update_data(
+            {"name": name}
+        )
+        await message.answer("Нажмите кнопку, чтобы ввести номер телефона", reply_markup=keyboard)
+
+        await Userdata.next()
 
 @dp.message_handler(content_types='contact', state=Userdata.phonenumber)
 async def get_contact(message: types.Message,state: FSMContext):
@@ -101,15 +108,21 @@ async def get_contact(message: types.Message,state: FSMContext):
         databs.update_user_course(chat_id, course,username)
     # else add to user on data base
     databs.add_course_user(chat_id,username,course,phonenumber)
-    contact = message.contact
-    await message.answer(
-        f"Rahmat, <b>{contact.full_name}</b>.\n"
-        f"Sizning {contact.phone_number} raqamingizni qabul qildik.\nAdminmiz siz bilan bog'lanadi.",
-        reply_markup=keyboard_uz)
+    if databs.get_user(chat_id)['lang'] == "uz":
+        await message.answer(
+            f"Rahmat, <b>{username}</b>.\n"
+            f"Sizning {phonenumber} raqamingizni qabul qildik.\nAdminmiz siz bilan bog'lanadi.",
+            reply_markup=keyboard_uz)
+        await state.finish()
+    else :
+        await message.answer(
+            "Спасибо, <b>{username}</b>.\n"
+            f"Мы получили ваш {phonenumber}.\n Наш администратор свяжется c вами.",
+            reply_markup=keyboard_ru
+        )
+        await state.finish()
 
-    await state.finish()
-
-@dp.message_handler(text=['📢 Siznig kurslaringiz'])
+@dp.message_handler(text=['📢 Siznig kurslaringiz','📢 Ваши курсы:'])
 async def cansel_course(message: types.Message, state=None):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
         data=databs.get_user_course(message.from_user.id)
@@ -120,23 +133,20 @@ async def cansel_course(message: types.Message, state=None):
             await message.answer(
             text=f"Sizning kurslaringiz ruyhati:\n{text}",
             )
+        else:
+            await message.answer("<b>Siz hali bizning kurslarimizga ro'yxatdan o'tmagansiz!!!</b>")
     else:
-        pass
-        # await state.finish()
+        data=databs.get_user_course(message.from_user.id)
+        text=''
+        if data is not None:
+            for i in data:
+                text +=f"\n {data.index(i)+1}.{i['course']}"
+            await message.answer(
+            text=f"Sizning kurslaringiz ruyhati:\n{text}",
+            )
+        else:
+            await message.answer('<b>Вы еще не зарегистрированы на наши курсы!!!</b>')
 
-# @dp.message_handler(text=['🔙 Ortga qaytish','🔙 Назад'])
-# async def cansel_course(message: types.Message, state=None):
-#     if databs.get_user(message.from_user.id)['lang'] == "uz":
-#         await message.answer(
-#             text="Kurslar ruyhati",
-#             reply_markup=coursesMenu)
-#         await state.finish()
-#     else:
-#         await message.answer(
-#             text="Kurslar ruyhati",
-#             reply_markup=coursesMenu_ru
-#         )
-#         await state.finish()
 
 @dp.callback_query_handler(course_callback.filter(item_name=['cancel']))
 async def cansel_menu(call: types.CallbackQuery):
@@ -144,10 +154,8 @@ async def cansel_menu(call: types.CallbackQuery):
         await call.message.answer(
             text="Kurslar ruyhati",
             reply_markup=keyboard_uz)
-        await call.message.delete()
     else:
         await call.message.answer(
             text="Список курсов",
             reply_markup=keyboard_ru
         )
-        await call.message.delete()

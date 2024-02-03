@@ -6,14 +6,12 @@ from keyboards.default.startMenuKeyboard import location_keyboard_uz, location_k
 @dp.message_handler(text=["📍Filialni tanlang:", "📍Выберите филиал:"])
 async def settings_bot(message: types.Message, state=None):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
-        await message.delete()
         await message.answer(
             text="Filialni tanlang:",
             reply_markup=location_keyboard_uz
         )
         # await message.answer(cache_time=60)
     else:
-        # await message.delete()
         await message.answer(
             text="⚙️ Sozlamalar!!!",
             reply_markup=location_keyboard_ru

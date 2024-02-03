@@ -2,22 +2,63 @@
     "user_lang": {
         "1066527771": {
             "chat_id": 1066527771,
-            "lang": "uz",
-            "admin": "1066527771"
+            "lang": "ru",
+            "admin": null
         },
-        "323223809": {
-            "chat_id": 323223809,
+        "643382683": {
+            "chat_id": 643382683,
             "lang": "uz",
-            "admin": "None"
+            "admin": "643382683"
+        },
+        "981500963": {
+            "chat_id": 981500963,
+            "lang": "ru",
+            "admin": null
         }
     },
     "user_cources": {
         "1": {
+            "doc_id": "1066527771_DTM",
+            "chat_id": 1066527771,
+            "username": "Diyor",
+            "course": "DTM",
+            "phonenumber": "998997444358"
+        },
+        "2": {
+            "doc_id": "643382683_SAT",
+            "chat_id": 643382683,
+            "username": "Muhammadlaziz Kurbanov",
+            "course": "SAT",
+            "phonenumber": "998915456699"
+        },
+        "3": {
             "doc_id": "1066527771_Umumiy matematika",
             "chat_id": 1066527771,
             "username": "Diyorbek",
             "course": "Umumiy matematika",
             "phonenumber": "998997444358"
+        }
+    },
+    "free_lesson": {
+        "1": {
+            "name_uz": "dars2",
+            "name_ru": "dars2",
+            "link": "https://www.youtube.com/results?search_query=adjectives+examples"
+        },
+        "2": {
+            "name_uz": "dars1",
+            "name_ru": "dars1",
+            "link": "https://www.youtube.com/results?search_query=adjectives+examples"
+        },
+        "3": {
+            "name_uz": "dars1",
+            "name_ru": "dars1",
+            "link": "https://www.youtube.com/results?search_query=adjectives+examples"
+        },
+        "4": {
+            "name_uz": "dars1",
+            "name_ru": "dars1",
+            "link": "https://www.youtube.com/results?search_query=adjectives+examples"
         }
     }
 }

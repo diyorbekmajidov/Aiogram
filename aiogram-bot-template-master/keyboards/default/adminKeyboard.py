@@ -5,9 +5,11 @@ admin_kurs = ReplyKeyboardMarkup(
         [
             KeyboardButton(text="Kurslar Statistika"),
             KeyboardButton(text="Post yaratish")],
-            [KeyboardButton("⬅️ Orqaga",),
+            [
+             KeyboardButton("Bepul darslar qushish",),
              KeyboardButton("🛠 Admin qushish")
-             ]
+             ],
+             [KeyboardButton("⬅️ Orqaga",),]
             ]
             ,resize_keyboard=True)
 
@@ -19,5 +21,11 @@ post_true_or_false = ReplyKeyboardMarkup(
             KeyboardButton('Yuq')
             ]
         ],resize_keyboard=True
+)
+
+back_admin_keyboard = ReplyKeyboardMarkup(
+    keyboard=[[
+        KeyboardButton('◀️ Orqaga')
+    ]],resize_keyboard=True
 )
 
