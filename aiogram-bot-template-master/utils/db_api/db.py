@@ -9,6 +9,15 @@ class DB:
         self.user = self.db.table('user_lang')
         self.user_cource = self.db.table('user_cources') 
         self.free_lesson = self.db.table('free_lesson')
+        self.teacher = self.db.table('teacher')
+
+    def add_teacher(self, username, science):
+        teacher={
+            'username':username,
+            "science":science
+        }
+        doc_id=self.teacher.insert(teacher)
+        return teacher
 
     def add_user(self, chat_id, lang=None, admin=None):
         self.user.insert(Document({

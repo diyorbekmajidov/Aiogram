@@ -65,6 +65,7 @@ async def check_link(message: types.Message, state:FSMContext):
 @dp.message_handler(text='Kurslar Statistika')
 async def Kurs_Statistika(message:types.Message):
     data = databs.get_user_all()
+    user = len(databs.get_alluser())
     course_data={
         'SAT':0, 
         'Umumiy matematika':0,
@@ -80,7 +81,7 @@ async def Kurs_Statistika(message:types.Message):
     for j in text:
         t+=f'{k}. {j[0]} : {j[1]}\n'
         k+= 1
-    await message.answer(f'{t}')
+    await message.answer(f'Umumiy foydalanuvchilar soni: {user}\n{t}')
 
 @dp.message_handler(text='Post yaratish')
 async def Kurs_Statistika(message:types.Message,state:None):
