@@ -132,13 +132,14 @@ async def get_contact(message: types.Message,state: FSMContext):
     if databs.get_user(chat_id)['lang'] == "uz":
         await message.answer(
             f"Rahmat, <b>{username}</b>.\n"
-            f"O'qtuvchi{teacher}.\n"
+            f"O'qtuvchi: {teacher}.\n"
             f"Sizning {phonenumber} raqamingizni qabul qildik.\nAdminmiz siz bilan bog'lanadi.",
             reply_markup=keyboard_uz)
         await state.finish()
     else :
         await message.answer(
             f"Спасибо, <b>{username}</b>.\n"
+            f"Учитель: {teacher}.\n"
             f"Мы получили ваш {phonenumber}.\n Наш администратор свяжется c вами.",
             reply_markup=keyboard_ru
         )

@@ -2,7 +2,8 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 keyboard_uz = ReplyKeyboardMarkup(
     keyboard = [
-        [KeyboardButton(text="Kurslarimiz")],
+        [KeyboardButton(text="Kurslarimiz"),
+        KeyboardButton(text="Ijtimoiy tarmoqlar")],
         [
             KeyboardButton(text="💰Bepul darslar"),
             KeyboardButton(text="📍Filialni tanlang:"),],

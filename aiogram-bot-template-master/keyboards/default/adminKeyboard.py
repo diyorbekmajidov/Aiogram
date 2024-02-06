@@ -2,8 +2,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 admin_kurs = ReplyKeyboardMarkup(
     keyboard=[
-        [
-            KeyboardButton(text="Kurslar Statistika"),
+        [KeyboardButton(text="Kurslar Statistika"),
             KeyboardButton(text="Post yaratish")],
             [
              KeyboardButton("Bepul darslar qushish",),
