@@ -1,4 +1,4 @@
-from tinydb import TinyDB, Query
+from tinydb import TinyDB, Query, where
 from tinydb.database import Document
 import uuid
 
@@ -17,7 +17,10 @@ class DB:
             "science":science
         }
         doc_id=self.teacher.insert(teacher)
-        return teacher
+        return doc_id
+    
+    def fillter_teacher(self, science):
+        return self.teacher.search(where('science') == science)
 
     def add_user(self, chat_id, lang=None, admin=None):
         self.user.insert(Document({
@@ -52,7 +55,7 @@ class DB:
         if admin:
             self.user.update({'admin':admin}, doc_ids=[chat_id])
             
-    def add_course_user(self, chat_id, username, courses, phonenumber):    
+    def add_course_user(self, chat_id, username, courses, phonenumber,teacher):    
         doc_id = f"{chat_id}_{courses}"
 
         # Check if doc_id already exists in the table
@@ -62,16 +65,17 @@ class DB:
                 'chat_id': chat_id,
                 'username': username,
                 'course': courses,
-                'phonenumber': phonenumber
+                'phonenumber': phonenumber,
+                'teacher':teacher
             })
 
-    def update_user_course(self, chat_id, new_courses, username):
+    def update_user_course(self, chat_id, new_courses, username,teacher):
         doc_id = f"{chat_id}_{new_courses}"
 
         # Check if doc_id already exists in the table
         if self.user_cource.contains(self.query.doc_id == doc_id):
             # Update the existing document
-            self.user_cource.update({'course': new_courses,'username':username}, self.query.doc_id == doc_id)
+            self.user_cource.update({'course': new_courses,'username':username,'teacher':teacher}, self.query.doc_id == doc_id)
         else:
             # Handle the case when the document does not exist
             print(f"Document with doc_id {doc_id} does not exist.")

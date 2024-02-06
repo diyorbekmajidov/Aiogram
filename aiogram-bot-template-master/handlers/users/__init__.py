@@ -5,5 +5,7 @@ from . import location
 from . import courses
 from . import admin
 from . import free_lesson
+from . import addteacher
+from . import courseregistrion
 
 # from . import echo

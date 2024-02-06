@@ -45,7 +45,7 @@ location_keyboard_uz = ReplyKeyboardMarkup(
         [KeyboardButton(text='Yagona daricha ')],  # city id in v
         [KeyboardButton(text='37-maktab oldida')],
         [KeyboardButton("⬅️ Orqaga",),]
-    ]
+    ],resize_keyboard=True
 )
 
 location_keyboard_ru = ReplyKeyboardMarkup(
@@ -53,17 +53,16 @@ location_keyboard_ru = ReplyKeyboardMarkup(
         [KeyboardButton(text='Единое окно')],  # city id in v
         [KeyboardButton(text='37-maktab ru')],
         [KeyboardButton("⬅️ Назад")]
-    ]
+    ],resize_keyboard=True
 )
 
 back_botton_uz = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton("⬅Orqaga",),]
-    ]
-)
+    ],resize_keyboard=True)
+
 
 back_botton_ru = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton("⬅Назад",),]
-    ]
-)
+    ],resize_keyboard=True)

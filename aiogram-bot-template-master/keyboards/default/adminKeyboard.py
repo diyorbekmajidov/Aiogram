@@ -9,7 +9,9 @@ admin_kurs = ReplyKeyboardMarkup(
              KeyboardButton("Bepul darslar qushish",),
              KeyboardButton("🛠 Admin qushish")
              ],
-             [KeyboardButton("⬅️ Orqaga",),]
+             [
+                KeyboardButton("O'qituvchi qo'shish"),
+                KeyboardButton("⬅️ Orqaga",),]
             ]
             ,resize_keyboard=True)
 

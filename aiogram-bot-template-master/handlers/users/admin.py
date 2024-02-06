@@ -121,7 +121,7 @@ async def get_file_id_p(message: types.Message, state: FSMContext):
     if message.photo:
         await state.update_data({"post": message.photo[-1].file_id, "caption":message.caption, "type":"photo"})
 
-        await message.reply("post qabul qilindi\n uni yuborish holasangiz <b>ha</b> tugmasini bosing akis holda <b>yuq<b>") 
+        await message.reply("post qabul qilindi\n uni yuborish holasangiz <b>ha</b> tugmasini bosing akis holda <b>yuq</b>") 
         await message.answer("sd", reply_markup=post_true_or_false)
 
         await PostStates.save_post.set()
