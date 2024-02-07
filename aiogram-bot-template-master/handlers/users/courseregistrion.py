@@ -9,13 +9,13 @@ from aiogram.dispatcher import FSMContext
 @dp.message_handler(text=["Kurslarimiz", "Наши курсы"])
 async def settings_bot(message: types.Message, state=None):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
-        await message.answer("Another message with a new keyboard:", reply_markup=types.ReplyKeyboardRemove())
+        await message.answer("Kursga yozilish uchun kurslardan birini tanlang va ma’lumotlarni botga kiriting.", reply_markup=types.ReplyKeyboardRemove())
         await message.answer(
             text="Kurslar ruyhati",
             reply_markup=coursesMenu)
         await Userdata.courseName.set()
     else:
-        await message.answer("Another message with a new keyboard:", reply_markup=types.ReplyKeyboardRemove())
+        await message.answer("Чтобы записаться на курс, выберите один из курсов и введите информацию в бота.", reply_markup=types.ReplyKeyboardRemove())
         await message.answer(
             text="Список курсов",
             reply_markup=coursesMenu_ru
@@ -44,7 +44,7 @@ async def buying_course(call: types.CallbackQuery, state: FSMContext):
             {"coursename": course}
         )
         await call.message.answer(
-            f"Siz {course.split(':')[1]}  Kursini tanladingiz.\nRuyhatda utishni istasangiz \nTo'liq ismingizni kiriting ...", 
+            f"Siz <b>{course.split(':')[1]}</b>  Kursini tanladingiz.\nRuyhatda utishni istasangiz \n<b>To'liq ismingizni kiriting </b>...", 
             reply_markup=back_botton_uz
             )
         await call.answer(cache_time=20)
@@ -60,7 +60,7 @@ async def buying_course(call: types.CallbackQuery, state: FSMContext):
         )
         course=course.split(':')[1]
         await call.message.answer(
-            f"Ты {lang[course]} выбрали курс.\n Если хотите выиграть в списке\n Введите свое полное имя...")
+            f"Ты <b>{lang[course]}</b> выбрали курс.\n Если хотите выиграть в списке\n <b>Введите свое полное имя</b>...")
         await call.answer(cache_time=20)
         await Userdata.next()
 

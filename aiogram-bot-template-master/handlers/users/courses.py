@@ -13,7 +13,8 @@ async def cansel_course(message: types.Message, state=None):
             for i in data:
                 text +=f"\n {data.index(i)+1}.{i['course']}"
             await message.answer(
-            text=f"Sizning kurslaringiz ruyhati:\n{text}",
+            text=f"<b>Sizning kurslaringiz ruyhati</b>:{text}\n\n"
+            f"Agar admin siz bilan bog'lanmagan bo'lsa, kursdan qayta ro'yxatdan o'ting!!!"
             )
         else:
             await message.answer("<b>Siz hali bizning kurslarimizga ro'yxatdan o'tmagansiz!!!</b>")
@@ -24,7 +25,9 @@ async def cansel_course(message: types.Message, state=None):
             for i in data:
                 text +=f"\n {data.index(i)+1}.{i['course']}"
             await message.answer(
-            text=f"Sizning kurslaringiz ruyhati:\n{text}",
+            text=f"Список ваших курсов:\n{text}\n\n"
+            f"Если администратор с вами не связался, пожалуйста, перезапишитесь на курс!!!"
+            ,
             )
         else:
             await message.answer('<b>Вы еще не зарегистрированы на наши курсы!!!</b>')

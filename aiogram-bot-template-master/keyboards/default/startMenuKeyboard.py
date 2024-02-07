@@ -32,7 +32,6 @@ keyboard_ru = ReplyKeyboardMarkup(
 settings_keyboard_uz = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 settings_keyboard_uz.add(
     KeyboardButton(text="⚙️ tillni almashtirish"),
-    KeyboardButton(text="ℹ️ info"),
     KeyboardButton("⬅️ Orqaga",),
 )
 
