@@ -3,9 +3,22 @@ from loader import dp, bot
 from keyboards.default.startMenuKeyboard import settings_keyboard_uz, settings_keyboard_ru, keyboard_ru, keyboard_uz
 from aiogram.dispatcher import FSMContext
 from states.userlang_update import LanguagesUpdate
-from keyboards.inline.langkeyboard import keyboard
+from keyboards.inline.langkeyboard import keyboard,Social_Networks_uz,Social_Networks_ru
 
 from .start import databs
+
+@dp.message_handler(text=['Ijtimoiy tarmoqlar','Социальные сети'])
+async def Social(message: types.Message, state=None):
+    if databs.get_user(message.from_user.id)['lang'] == "uz":
+        await message.answer(
+            text="Bizning ijtimoiy tarmoqlar", 
+            reply_markup=Social_Networks_uz
+            )
+    else:
+        await message.answer(
+            text="Бизнес иджтимой тармоклар",
+            reply_markup=Social_Networks_ru
+        )
 
 @dp.message_handler(text=["⚙️ Texnik yordam", "⚙️ Техническая поддержка:"])
 async def settings_bot(message: types.Message, state=None):

@@ -16,19 +16,19 @@ async def settings_bot(message: types.Message, state=None):
             text="⚙️ Sozlamalar!!!",
             reply_markup=location_keyboard_ru
         )
-        await message.answer(cache_time=60)
+        # await message.answer(cache_time=60)
 
 
 @dp.message_handler(text=["Yagona daricha", "Единое окно"])
 async def send_location(message: types.Message):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
         await message.answer(
-            text="Najot talim uquv markazi\n📍 76 Narpayskaya ko'chasi\n🕓 10:00 - 21:50\n✅ Wi-Fi\n✅ Kaworking zone",
+            text="Premium Education uquv markazi\n📍 76 Narpayskaya ko'chasi\n🕓 10:00 - 20:50\n✅ Wi-Fi\n✅ Kaworking zone",
         )
         await bot.send_location(message.chat.id, latitude=41.3136, longitude=69.2823)
     else:
         await message.answer(
-            text="Образовательный центр Наджот Талим\n📍ул. Нарпайская, 76\n🕓 10:00 - 21:50\n ✅ Wi-Fi\n ✅ Зона Kaworking",
+            text="Учебный центр Премиум Образования\n📍ул. Нарпайская, 76\n🕓 10:00 - 20:50\n ✅ Wi-Fi\n ✅ Зона Kaworking",
         )
         await bot.send_location(message.chat.id, latitude=41.3136, longitude=69.2823)
         # await message.answer(cache_time=60)
@@ -38,11 +38,11 @@ async def send_location(message: types.Message):
 async def send_location(message: types.Message):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
         await message.answer(
-            text="Najot talim uquv markazi\n📍 76 Narpayskaya ko'chasi\n🕓 10:00 - 21:50\n✅ Wi-Fi\n✅ Kaworking zone",
+            text="Premium Education uquv markazi\n📍 76 Narpayskaya ko'chasi\n🕓 10:00 - 20:50\n✅ Wi-Fi\n✅ Kaworking zone",
         )
-        await bot.send_location(message.chat.id, latitude=41.3136, longitude=69.2823)
+        await bot.send_location(message.chat.id, latitude=39.65369017615916, longitude=66.95189418116307)
     else:
         await message.answer(
-            text="Образовательный центр Наджот Талим\n📍ул. Нарпайская, 76\n🕓 10:00 - 21:50\n ✅ Wi-Fi\n ✅ Зона Kaworking",
+            text="Учебный центр Премиум Образования\n📍ул. Нарпайская, 76\n🕓 10:00 - 20:50\n ✅ Wi-Fi\n ✅ Зона Kaworking",
         )
-        await bot.send_location(message.chat.id, latitude=41.3136, longitude=69.2823)
+        await bot.send_location(message.chat.id, latitude=39.65369017615916, longitude=66.95189418116307)

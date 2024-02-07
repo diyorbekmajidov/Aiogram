@@ -15,7 +15,9 @@ keyboard_uz = ReplyKeyboardMarkup(
 
 keyboard_ru = ReplyKeyboardMarkup(
     keyboard = [
-        [KeyboardButton(text="Наши курсы")],
+        [KeyboardButton(text="Наши курсы"),
+         KeyboardButton(text="Социальные сети"),
+         ],
         [
             KeyboardButton(text="💰Бесплатные уроки:"),
             KeyboardButton(text="📍Выберите филиал:"),
