@@ -25,13 +25,13 @@ async def send_location(message: types.Message):
         await message.answer(
             text="Premium Education uquv markazi\n📍 76 Narpayskaya ko'chasi\n🕓 10:00 - 20:50\n✅ Wi-Fi\n✅ Kaworking zone",
         )
-        await bot.send_location(message.chat.id, latitude=41.3136, longitude=69.2823)
+        await bot.send_location(message.chat.id, latitude=39.647000, longitude=66.933333)
     else:
         await message.answer(
             text="Учебный центр Премиум Образования\n📍ул. Нарпайская, 76\n🕓 10:00 - 20:50\n ✅ Wi-Fi\n ✅ Зона Kaworking",
         )
-        await bot.send_location(message.chat.id, latitude=41.3136, longitude=69.2823)
-        # await message.answer(cache_time=60)
+        await bot.send_location(message.chat.id, latitude=39.647000, longitude=66.933333)
+    
 
     
 @dp.message_handler(text=["37 перед школой", "37-maktab oldida"])

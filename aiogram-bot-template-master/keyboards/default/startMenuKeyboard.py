@@ -45,7 +45,7 @@ settings_keyboard_ru.add(
 location_keyboard_uz = ReplyKeyboardMarkup(
     keyboard = [
         [KeyboardButton(text='Yagona daricha ')],  # city id in v
-        [KeyboardButton(text='37-maktab oldida')],
+        [KeyboardButton(text='37-maktab')],
         [KeyboardButton("⬅️ Orqaga",),]
     ],resize_keyboard=True
 )
@@ -53,7 +53,7 @@ location_keyboard_uz = ReplyKeyboardMarkup(
 location_keyboard_ru = ReplyKeyboardMarkup(
     keyboard = [
         [KeyboardButton(text='Единое окно')],  # city id in v
-        [KeyboardButton(text='37-maktab ru')],
+        [KeyboardButton(text='Школа 37')],
         [KeyboardButton("⬅️ Назад")]
     ],resize_keyboard=True
 )

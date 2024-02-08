@@ -11,7 +11,7 @@ from .start import databs
 async def Social(message: types.Message, state=None):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
         await message.answer(
-            text="Bizning ijtimoiy tarmoqlar", 
+            text="Наши социальные сети", 
             reply_markup=Social_Networks_uz
             )
     else:
