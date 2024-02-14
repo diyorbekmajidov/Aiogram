@@ -1,4 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types.web_app_info import WebAppInfo
 
 keyboard_uz = ReplyKeyboardMarkup(
     keyboard = [
@@ -8,7 +9,7 @@ keyboard_uz = ReplyKeyboardMarkup(
             KeyboardButton(text="💰Bepul darslar"),
             KeyboardButton(text="📍Filialni tanlang:"),],
         [KeyboardButton(text="⚙️ Texnik yordam"),
-         KeyboardButton(text="📢 Siznig kurslaringiz")],
+         KeyboardButton(text="👥 So'rovnoma", web_app=WebAppInfo(url='https://forms.gle/17cZ3ZFDGSkGLAqr6'))]
         ],
     resize_keyboard=True
 )
@@ -23,7 +24,7 @@ keyboard_ru = ReplyKeyboardMarkup(
             KeyboardButton(text="📍Выберите филиал:"),
         ],
         [KeyboardButton(text="⚙️ Техническая поддержка:"),
-         KeyboardButton(text="📢 Ваши курсы:")],
+         KeyboardButton(text="👥 Анкета", web_app=WebAppInfo(url='https://forms.gle/4MgGb7vustYQoTY19'))],
         ],
     resize_keyboard=True
 )
@@ -32,13 +33,14 @@ keyboard_ru = ReplyKeyboardMarkup(
 settings_keyboard_uz = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 settings_keyboard_uz.add(
     KeyboardButton(text="⚙️ tillni almashtirish"),
+    KeyboardButton(text="📢 Siznig kurslaringiz"),
     KeyboardButton("⬅️ Orqaga",),
 )
 
 settings_keyboard_ru = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 settings_keyboard_ru.add(
     KeyboardButton(text="⚙️ изменение языка"),
-    KeyboardButton(text="ℹ️ info"),
+    KeyboardButton(text="📢 Ваши курсы:"),
     KeyboardButton("⬅️ Назад"),
 )
 
