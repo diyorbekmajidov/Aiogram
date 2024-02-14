@@ -5,6 +5,7 @@ from keyboards.inline.callback_data import course_callback
 from keyboards.inline.kurslarkeybord import coursesMenu, coursesMenu_ru, keyboard
 from keyboards.default.startMenuKeyboard import keyboard_ru, keyboard_uz, back_botton_uz, back_botton_ru
 from states.user_course import Userdata
+from data.config import ADMINS
 from aiogram.dispatcher import FSMContext
 @dp.message_handler(text=["Kurslarimiz", "Наши курсы"])
 async def settings_bot(message: types.Message, state=None):
@@ -126,9 +127,14 @@ async def get_contact(message: types.Message,state: FSMContext):
     phonenumber = message.contact.phone_number
     chat_id = message.from_user.id
     if databs.get_user_coursename(f"{chat_id}_{course}") is not None:
+        for admin in ADMINS:
+            await dp.bot.send_message(admin, f"1.Ismi:{username}\n2.Kurs:{course}\n3.O'qtuvchi:{teacher}\n4.Telfon raqami:{phonenumber}")
         databs.update_user_course(chat_id, course,username,teacher)
     # else add to user on data base
-    databs.add_course_user(chat_id,username,course,phonenumber,teacher)
+    else:
+        for admin in ADMINS:
+            await dp.bot.send_message(admin, f"1.Ismi:{username}\n2.Kurs:{course}\n3.O'qtuvchi:{teacher}\n4.Telfon raqami:{phonenumber}")
+        databs.add_course_user(chat_id,username,course,phonenumber,teacher)
     if databs.get_user(chat_id)['lang'] == "uz":
         await message.answer(
             f"Rahmat, <b>{username}</b>.\n"

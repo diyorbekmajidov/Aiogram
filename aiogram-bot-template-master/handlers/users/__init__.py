@@ -7,6 +7,5 @@ from . import admin
 from . import free_lesson
 from . import addteacher
 from . import courseregistrion
-from . import questionnaire
 
 # from . import echo

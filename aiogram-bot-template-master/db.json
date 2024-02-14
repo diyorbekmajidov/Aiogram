@@ -2,7 +2,7 @@
     "user_lang": {
         "1066527771": {
             "chat_id": 1066527771,
-            "lang": "ru",
+            "lang": "uz",
             "admin": null
         }
     },
@@ -31,10 +31,18 @@
         "1": {
             "doc_id": "1066527771_SAT",
             "chat_id": 1066527771,
-            "username": "Dadsaf",
+            "username": "Diyor",
             "course": "SAT",
             "phonenumber": "998997444358",
-            "teacher": "Sanjar Jozilov"
+            "teacher": "Diyorbek Majidov"
+        },
+        "2": {
+            "doc_id": "1066527771_Bolalar uchun matematika",
+            "chat_id": 1066527771,
+            "username": "Dijksfdha",
+            "course": "Bolalar uchun matematika",
+            "phonenumber": "998997444358",
+            "teacher": "Sardor Narziqulov"
         }
     }
 }
