@@ -9,7 +9,7 @@ keyboard_uz = ReplyKeyboardMarkup(
             KeyboardButton(text="💰Bepul darslar"),
             KeyboardButton(text="📍Filialni tanlang:"),],
         [KeyboardButton(text="⚙️ Texnik yordam"),
-         KeyboardButton(text="👥 So'rovnoma", web_app=WebAppInfo(url='https://forms.gle/17cZ3ZFDGSkGLAqr6'))]
+         KeyboardButton(text="👥 So'rovnoma", web_app=WebAppInfo(url='https://docs.google.com/forms/d/e/1FAIpQLSfaz5GMsD1_Yju8OHL_gpAlupLJnWHqisxuW9VuJ6wnSlEbXg/viewform?usp=sf_link'))]
         ],
     resize_keyboard=True
 )
@@ -24,7 +24,20 @@ keyboard_ru = ReplyKeyboardMarkup(
             KeyboardButton(text="📍Выберите филиал:"),
         ],
         [KeyboardButton(text="⚙️ Техническая поддержка:"),
-         KeyboardButton(text="👥 Анкета", web_app=WebAppInfo(url='https://forms.gle/4MgGb7vustYQoTY19'))],
+         KeyboardButton(text="👥 Анкета", web_app=WebAppInfo(url='https://docs.google.com/forms/d/e/1FAIpQLScX_XrIarGis_9On_7EyfaDTQRypiV3v4m9YAolAtqx6MKzmg/viewform?usp=sf_link'))],
+        ],
+    resize_keyboard=True
+)
+
+keyboard_en = ReplyKeyboardMarkup(
+    keyboard = [
+        [KeyboardButton(text="Our courses"),
+        KeyboardButton(text="Social networks")],
+        [
+            KeyboardButton(text="💰Free lessons"),
+            KeyboardButton(text="📍Choose a branch:"),],
+        [KeyboardButton(text="⚙️ Technical support"),
+         KeyboardButton(text="👥 Questionnaire", web_app=WebAppInfo(url='https://docs.google.com/forms/d/e/1FAIpQLSfaz5GMsD1_Yju8OHL_gpAlupLJnWHqisxuW9VuJ6wnSlEbXg/viewform?usp=sf_link'))]
         ],
     resize_keyboard=True
 )
@@ -44,6 +57,13 @@ settings_keyboard_ru.add(
     KeyboardButton("⬅️ Назад"),
 )
 
+settings_keyboard_en = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+settings_keyboard_en.add(
+    KeyboardButton(text="⚙️ change language"),
+    KeyboardButton(text="📢 Your courses"),
+    KeyboardButton("⬅️ Back",),
+)
+
 location_keyboard_uz = ReplyKeyboardMarkup(
     keyboard = [
         [KeyboardButton(text='Yagona daricha ')],  # city id in v
@@ -57,6 +77,14 @@ location_keyboard_ru = ReplyKeyboardMarkup(
         [KeyboardButton(text='Единое окно')],  # city id in v
         [KeyboardButton(text='Школа 37')],
         [KeyboardButton("⬅️ Назад")]
+    ],resize_keyboard=True
+)
+
+location_keyboard_en = ReplyKeyboardMarkup(
+    keyboard = [
+        [KeyboardButton(text='A single window')],  # city id in v
+        [KeyboardButton(text='School 37')],
+        [KeyboardButton("⬅️ Back")]
     ],resize_keyboard=True
 )
 

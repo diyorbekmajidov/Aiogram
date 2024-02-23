@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 from loader import dp, bot
 from states.user_lang import UserLang
 from keyboards.inline.langkeyboard import keyboard
-from keyboards.default.startMenuKeyboard import keyboard_uz, keyboard_ru
+from keyboards.default.startMenuKeyboard import keyboard_uz, keyboard_ru,keyboard_en
 
 from utils.db_api.db import DB
 databs = DB('db.json')
@@ -18,13 +18,15 @@ async def start(message: types.Message):
     )
     await UserLang.lang.set()
 
-@dp.callback_query_handler(lambda c: c.data in ['uz', 'ru'], state=UserLang.lang)
+@dp.callback_query_handler(lambda c: c.data in ['uz', 'ru', 'en'], state=UserLang.lang)
 async def lang_user_callback(call: types.CallbackQuery, state: FSMContext):
     lang = call.data
     if databs.get_user(call.from_user.id) is None:
         databs.add_user(call.from_user.id, lang)
         if lang == 'uz':
             await call.message.answer("Bo‘limni tanlang:", reply_markup=keyboard_uz)
+        elif lang == 'en':
+            await call.message.answer("Select a section:", reply_markup=keyboard_en)
         else:
             await call.message.answer("Выберите раздел:", reply_markup=keyboard_ru)
         await call.answer(cache_time=60)
@@ -35,6 +37,8 @@ async def lang_user_callback(call: types.CallbackQuery, state: FSMContext):
         lang=databs.get_user(call.from_user.id)['lang']
         if lang == 'uz':
             await call.message.answer("Bo‘limni tanlang:", reply_markup=keyboard_uz)
+        elif lang == 'en':
+            await call.message.answer("Select a section:", reply_markup=keyboard_en)
         else:
             await call.message.answer("Выберите раздел:", reply_markup=keyboard_ru)
         await call.answer(cache_time=60)
