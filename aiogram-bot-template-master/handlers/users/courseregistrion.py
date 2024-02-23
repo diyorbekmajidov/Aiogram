@@ -125,6 +125,9 @@ async def answer_email(message:types.Message, state: FSMContext):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
         await  message.answer(f"O'qituvchini tanlang\n{t}",reply_markup=teacher_keyboard)
         await Userdata.next()
+    elif  databs.get_user(message.from_user.id)['lang'] == 'en':
+        await  message.answer(f"Choose a teacher\n{t}",reply_markup=teacher_keyboard)
+        await Userdata.next()
     else:
         await  message.answer(f'Выбрать преподавателя\n{t}',reply_markup=teacher_keyboard)
         await Userdata.next()
@@ -137,6 +140,9 @@ async def teacher_info(call: types.CallbackQuery, state:FSMContext):
     user = databs.get_user(call.from_user.id)
     if user['lang']=='uz':
         await call.message.answer("Telefon raqamini kiritish uchun tugmani bosing", reply_markup=keyboard)
+        await Userdata.next()
+    elif  user['lang']=='en':
+        await call.message.answer("Click the button to enter the phone number", reply_markup=keyboard)
         await Userdata.next()
     else:
         await call.message.answer("Нажмите кнопку, чтобы ввести номер телефона", reply_markup=keyboard)
@@ -167,6 +173,13 @@ async def get_contact(message: types.Message,state: FSMContext):
             f"O'qtuvchi: {teacher}.\n"
             f"Sizning {phonenumber} raqamingizni qabul qildik.\nAdminmiz siz bilan bog'lanadi.",
             reply_markup=keyboard_uz)
+        await state.finish()
+    elif databs.get_user(chat_id)['lang'] == "en":
+        await message.answer(
+            f"Thank you, <b>{username}</b>.\n"
+            f"Teacher: {teacher}.\n"
+            f"We have received your {phonenumber}.\nOur admin will contact you.",
+            reply_markup=keyboard_en)
         await state.finish()
     else :
         await message.answer(

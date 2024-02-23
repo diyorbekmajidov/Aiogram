@@ -40,13 +40,21 @@ async def back_admin(message:types.Message,state:FSMContext):
 async def handler2(message:types.Message, state:FSMContext):
     name_uz = message.text
     await state.update_data({'name_uz':name_uz})
-    await message.answer("Qushmoqchi bulgan kursingi nomini yozib yuboring <b>rus </b>tilida")
+    await message.answer("Qushmoqchi bulgan kursingi nomini yozib yuboring <b>Rus</b>tilida")
     await FreeLesson_State.name_ru.set()
 
 @dp.message_handler(state=FreeLesson_State.name_ru)
 async def check_name_ru(message: types.Message, state: FSMContext):
     name_ru = message.text
     await state.update_data({'name_ru':name_ru})
+    await message.answer("Qushmoqchi bulgan kursingi <b>Ingliz</b> tilida")
+    await FreeLesson_State.name_en.set()
+
+
+@dp.message_handler(state=FreeLesson_State.name_en)
+async def check_name_ru(message: types.Message, state: FSMContext):
+    name_en = message.text
+    await state.update_data({'name_en':name_en})
     await message.answer("Qushmoqchi bulgan kursingi <b>link</b> yuboring")
     await FreeLesson_State.link.set()
 
@@ -55,9 +63,10 @@ async def check_link(message: types.Message, state:FSMContext):
     link = message.text
     await state.update_data({'link':link})
     data = await state.get_data()
+    name_en=data['name_en']
     name_uz=data['name_uz']
     name_ru=data['name_ru']
-    databs.add_free_lesson(name_ru=name_ru,name_uz=name_ru,link=link)
+    databs.add_free_lesson(name_ru=name_uz,name_uz=name_ru,name_en=name_en,link=link)
     await message.answer('Kurs mufaqatli qushildi')
     await state.finish()
 

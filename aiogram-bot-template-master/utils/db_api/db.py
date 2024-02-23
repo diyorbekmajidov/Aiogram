@@ -29,9 +29,10 @@ class DB:
             'admin':admin
             }, doc_id=chat_id))
         
-    def add_free_lesson(self, name_uz, name_ru, link):
+    def add_free_lesson(self, name_uz, name_ru,name_en, link):
         new_lesson = {
             'name_uz': name_uz,
+            'name_en': name_en,
             'name_ru': name_ru,
             'link': link
         }

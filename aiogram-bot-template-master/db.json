@@ -11,11 +11,18 @@
             "admin": null
         }
     },
+    "teacher": {
+        "1": {
+            "username": "dsdfasdf",
+            "science": "SAT"
+        }
+    },
     "free_lesson": {
         "1": {
-            "name_uz": "dsafds",
-            "name_ru": "dsafds",
-            "link": "https://www.youtube.com/watch?v=tvSBkLdHojQ"
+            "name_uz": "dsfasd",
+            "name_en": "asdf",
+            "name_ru": "dsafh",
+            "link": "https://www.youtube.com/watch?v=Mup6uM2gdKk"
         }
     }
 }
