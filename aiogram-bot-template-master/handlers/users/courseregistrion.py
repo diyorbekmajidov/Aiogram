@@ -2,26 +2,27 @@ from aiogram import types
 from loader import dp, bot
 from .start import databs
 from keyboards.inline.callback_data import course_callback
-from keyboards.inline.kurslarkeybord import coursesMenu, coursesMenu_ru, keyboard
-from keyboards.default.startMenuKeyboard import keyboard_ru, keyboard_uz, back_botton_uz, back_botton_ru
+from keyboards.inline.kurslarkeybord import coursesMenu, coursesMenu_ru,coursesMenu_en, keyboard
+from keyboards.default.startMenuKeyboard import keyboard_ru, keyboard_uz,keyboard_en, back_botton_uz, back_botton_ru,back_botton_en
 from states.user_course import Userdata
 from data.config import ADMINS
 from aiogram.dispatcher import FSMContext
-@dp.message_handler(text=["Kurslarimiz", "Наши курсы"])
-async def settings_bot(message: types.Message, state=None):
-    if databs.get_user(message.from_user.id)['lang'] == "uz":
+async def send_course_list(message: types.Message, lang):
+    if lang == "uz":
         await message.answer("Kursga yozilish uchun kurslardan birini tanlang va ma’lumotlarni botga kiriting.", reply_markup=types.ReplyKeyboardRemove())
-        await message.answer(
-            text="Kurslar ruyhati",
-            reply_markup=coursesMenu)
-        await Userdata.courseName.set()
+        await message.answer(text="Kurslar ruyhati", reply_markup=coursesMenu)
+    elif lang == "en":
+        await message.answer("To enroll in a course, select one of the courses and enter the information in the bot.", reply_markup=types.ReplyKeyboardRemove())
+        await message.answer(text="List of courses", reply_markup=coursesMenu_en)
     else:
         await message.answer("Чтобы записаться на курс, выберите один из курсов и введите информацию в бота.", reply_markup=types.ReplyKeyboardRemove())
-        await message.answer(
-            text="Список курсов",
-            reply_markup=coursesMenu_ru
-        )
-        await Userdata.courseName.set()
+        await message.answer(text="Список курсов", reply_markup=coursesMenu_ru)
+
+@dp.message_handler(text=["Kurslarimiz", "Наши курсы", "Our courses"])
+async def settings_bot(message: types.Message, state=None):
+    lang = databs.get_user(message.from_user.id)['lang']
+    await send_course_list(message, lang)
+    await Userdata.courseName.set()
 
 @dp.callback_query_handler(course_callback.filter(item_name=['cancel']),state='*')
 async def cansel_menu(call: types.CallbackQuery, state: FSMContext):
@@ -30,12 +31,20 @@ async def cansel_menu(call: types.CallbackQuery, state: FSMContext):
             text="Kurslar ruyhati",
             reply_markup=keyboard_uz)
         await state.finish()
+        await call.answer(cache_time=20)
+    elif databs.get_user(call.from_user.id)['lang'] == "en":
+        await call.message.answer(
+            text="List of courses",
+            reply_markup=keyboard_en)
+        await call.answer(cache_time=20)
+        await state.finish()
     else:
         await call.message.answer(
             text="Список курсов",
             reply_markup=keyboard_ru
         )
         await state.finish()
+        await call.answer(cache_time=20)
 
 @dp.callback_query_handler(course_callback.filter(item_name=['SAT', 'Umumiy matematika','Bolalar uchun matematika','Ingliz tili', 'DTM']), state=Userdata.courseName)
 async def buying_course(call: types.CallbackQuery, state: FSMContext):
@@ -47,6 +56,18 @@ async def buying_course(call: types.CallbackQuery, state: FSMContext):
         await call.message.answer(
             f"Siz <b>{course.split(':')[1]}</b>  Kursini tanladingiz.\nRuyhatda utishni istasangiz \n<b>To'liq ismingizni kiriting </b>...", 
             reply_markup=back_botton_uz
+            )
+        await call.answer(cache_time=20)
+        await Userdata.next()
+
+    elif  databs.get_user(call.from_user.id)['lang'] == 'en':
+        course = call.data
+        await state.update_data(
+            {"coursename": course}
+        )
+        await call.message.answer(
+            f"You <b>{course.split(':')[1]}</b>  You have selected a course.\nIf you want to win on the list, \n<b>Enter your full name </b>...", 
+            reply_markup=back_botton_en
             )
         await call.answer(cache_time=20)
         await Userdata.next()
@@ -66,12 +87,17 @@ async def buying_course(call: types.CallbackQuery, state: FSMContext):
         await Userdata.next()
 
 
-@dp.message_handler(text=['⬅Orqaga',"⬅Назад"],state='*')
+@dp.message_handler(text=['⬅Orqaga',"⬅Назад",'⬅Back'],state='*')
 async def back_to_menu(msg:types.Message,state:FSMContext):
     if databs.get_user(msg.from_user.id)['lang'] == "uz":
         await msg.answer(
             text="Kurslar ruyhati",
             reply_markup=keyboard_uz)
+        await state.finish()
+    if  databs.get_user(msg.from_user.id)['lang'] == "en":
+        await msg.answer(
+            text="Kurslar ruyhati",
+            reply_markup=keyboard_en)
         await state.finish()
     else:
         await msg.answer(

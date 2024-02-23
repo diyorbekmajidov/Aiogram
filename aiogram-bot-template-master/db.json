@@ -10,5 +10,12 @@
             "lang": "uz",
             "admin": null
         }
+    },
+    "free_lesson": {
+        "1": {
+            "name_uz": "dsafds",
+            "name_ru": "dsafds",
+            "link": "https://www.youtube.com/watch?v=tvSBkLdHojQ"
+        }
     }
 }

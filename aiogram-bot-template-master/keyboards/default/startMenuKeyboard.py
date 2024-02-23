@@ -93,6 +93,10 @@ back_botton_uz = ReplyKeyboardMarkup(
         [KeyboardButton("⬅Orqaga",),]
     ],resize_keyboard=True)
 
+back_botton_en = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton("⬅Back",),]
+    ],resize_keyboard=True)
 
 back_botton_ru = ReplyKeyboardMarkup(
     keyboard=[

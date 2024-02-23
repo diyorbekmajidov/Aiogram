@@ -2,7 +2,7 @@ from aiogram import types
 from loader import dp, bot
 from .start import databs
 from keyboards.inline.callback_data import course_callback
-from keyboards.default.startMenuKeyboard import keyboard_ru, keyboard_uz
+from keyboards.default.startMenuKeyboard import keyboard_ru, keyboard_uz,keyboard_en
 
 @dp.message_handler(text=['📢 Siznig kurslaringiz','📢 Ваши курсы:'])
 async def cansel_course(message: types.Message, state=None):
@@ -33,16 +33,3 @@ async def cansel_course(message: types.Message, state=None):
             await message.answer('<b>Вы еще не зарегистрированы на наши курсы!!!</b>')
 
 
-@dp.callback_query_handler(course_callback.filter(item_name=['cancel']))
-async def cansel_menu(call: types.CallbackQuery):
-    if databs.get_user(call.from_user.id)['lang'] == "uz":
-        await call.message.answer(
-            text="Kurslar ruyhati",
-            reply_markup=keyboard_uz)
-        await call.answer(cache_time=20)
-    else:
-        await call.message.answer(
-            text="Список курсов",
-            reply_markup=keyboard_ru
-        )
-        await call.answer(cache_time=20)
