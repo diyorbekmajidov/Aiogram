@@ -37,7 +37,7 @@ keyboard_en = ReplyKeyboardMarkup(
             KeyboardButton(text="💰Free lessons"),
             KeyboardButton(text="📍Choose a branch:"),],
         [KeyboardButton(text="⚙️ Technical support"),
-         KeyboardButton(text="👥 Questionnaire", web_app=WebAppInfo(url='https://docs.google.com/forms/d/e/1FAIpQLSfaz5GMsD1_Yju8OHL_gpAlupLJnWHqisxuW9VuJ6wnSlEbXg/viewform?usp=sf_link'))]
+         KeyboardButton(text="👥 Questionnaire", web_app=WebAppInfo(url='https://docs.google.com/forms/d/e/1FAIpQLSd8nRiqwcdevDTezmvwvFrggU4lPl8U7MOZMd1EcRv4K0GlJw/viewform?usp=sf_link'))]
         ],
     resize_keyboard=True
 )
