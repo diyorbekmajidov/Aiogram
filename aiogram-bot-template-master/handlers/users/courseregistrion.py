@@ -149,6 +149,27 @@ async def teacher_info(call: types.CallbackQuery, state:FSMContext):
         await Userdata.next()
     
 
+async def send_confirmation_message(message: types.Message, lang, username, teacher, phonenumber):
+    if lang == "uz":
+        await message.answer(
+            f"Rahmat, <b>{username}</b>.\n"
+            f"O'qtuvchi: {teacher}.\n"
+            f"Sizning {phonenumber} raqamingizni qabul qildik.\nAdminmiz siz bilan bog'lanadi.",
+            reply_markup=keyboard_uz)
+    elif lang == "en":
+        await message.answer(
+            f"Thank you, <b>{username}</b>.\n"
+            f"Teacher: {teacher}.\n"
+            f"We have received your {phonenumber}.\nOur admin will contact you.",
+            reply_markup=keyboard_en)
+    else :
+        await message.answer(
+            f"Спасибо, <b>{username}</b>.\n"
+            f"Учитель: {teacher}.\n"
+            f"Мы получили ваш {phonenumber}.\n Наш администратор свяжется c вами.",
+            reply_markup=keyboard_ru
+        )
+
 @dp.message_handler(content_types='contact', state=Userdata.phonenumber)
 async def get_contact(message: types.Message,state: FSMContext):
     data = await state.get_data()
@@ -158,34 +179,19 @@ async def get_contact(message: types.Message,state: FSMContext):
     teacher = data.get('teacher')
     phonenumber = message.contact.phone_number
     chat_id = message.from_user.id
+
+    # Check if the user is already registered for this course
     if databs.get_user_coursename(f"{chat_id}_{course}") is not None:
+        user_info_message = f"1.Ismi:{username}\n2.Kurs:{course}\n3.O'qtuvchi:{teacher}\n4.Telfon raqami:{phonenumber}"
         for admin in ADMINS:
-            await dp.bot.send_message(admin, f"1.Ismi:{username}\n2.Kurs:{course}\n3.O'qtuvchi:{teacher}\n4.Telfon raqami:{phonenumber}")
+            await dp.bot.send_message(admin, user_info_message)
         databs.update_user_course(chat_id, course,username,teacher)
-    # else add to user on data base
     else:
+        user_info_message = f"1.Ismi:{username}\n2.Kurs:{course}\n3.O'qtuvchi:{teacher}\n4.Telfon raqami:{phonenumber}"
         for admin in ADMINS:
-            await dp.bot.send_message(admin, f"1.Ismi:{username}\n2.Kurs:{course}\n3.O'qtuvchi:{teacher}\n4.Telfon raqami:{phonenumber}")
+            await dp.bot.send_message(admin, user_info_message)
         databs.add_course_user(chat_id,username,course,phonenumber,teacher)
-    if databs.get_user(chat_id)['lang'] == "uz":
-        await message.answer(
-            f"Rahmat, <b>{username}</b>.\n"
-            f"O'qtuvchi: {teacher}.\n"
-            f"Sizning {phonenumber} raqamingizni qabul qildik.\nAdminmiz siz bilan bog'lanadi.",
-            reply_markup=keyboard_uz)
-        await state.finish()
-    elif databs.get_user(chat_id)['lang'] == "en":
-        await message.answer(
-            f"Thank you, <b>{username}</b>.\n"
-            f"Teacher: {teacher}.\n"
-            f"We have received your {phonenumber}.\nOur admin will contact you.",
-            reply_markup=keyboard_en)
-        await state.finish()
-    else :
-        await message.answer(
-            f"Спасибо, <b>{username}</b>.\n"
-            f"Учитель: {teacher}.\n"
-            f"Мы получили ваш {phonenumber}.\n Наш администратор свяжется c вами.",
-            reply_markup=keyboard_ru
-        )
-        await state.finish()
+
+    lang = databs.get_user(chat_id)['lang']
+    await send_confirmation_message(message, lang, username, teacher, phonenumber)
+    await state.finish()

@@ -2,27 +2,14 @@
     "user_lang": {
         "1066527771": {
             "chat_id": 1066527771,
-            "lang": "en",
-            "admin": null
-        },
-        "323223809": {
-            "chat_id": 323223809,
             "lang": "uz",
             "admin": null
         }
     },
     "teacher": {
         "1": {
-            "username": "dsdfasdf",
+            "username": "Qosim",
             "science": "SAT"
-        }
-    },
-    "free_lesson": {
-        "1": {
-            "name_uz": "dsfasd",
-            "name_en": "asdf",
-            "name_ru": "dsafh",
-            "link": "https://www.youtube.com/watch?v=Mup6uM2gdKk"
         }
     }
 }

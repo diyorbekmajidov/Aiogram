@@ -42,7 +42,7 @@ async def send_location(message: types.Message):
     
 
     
-@dp.message_handler(text=["37 перед школой", "37-maktab oldida",'School 37'])
+@dp.message_handler(text=["Школа 37", "37-maktab",'School 37'])
 async def send_location(message: types.Message):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
         await message.answer(
