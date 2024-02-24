@@ -2,7 +2,7 @@
     "user_lang": {
         "1066527771": {
             "chat_id": 1066527771,
-            "lang": "uz",
+            "lang": "en",
             "admin": null
         }
     },
@@ -10,6 +10,16 @@
         "1": {
             "username": "Qosim",
             "science": "SAT"
+        }
+    },
+    "user_cources": {
+        "1": {
+            "doc_id": "1066527771_SAT",
+            "chat_id": 1066527771,
+            "username": "Bkk",
+            "course": "SAT",
+            "phonenumber": "998997444358",
+            "teacher": "Qosim"
         }
     }
 }

@@ -11,7 +11,7 @@ async def cansel_course(message: types.Message, state=None):
         text=''
         if data is not None:
             for i in data:
-                text +=f"\n {data.index(i)+1}.{i['course']}"
+                text +=f"\n {data.index(i)+1}. {i['course']}"
             await message.answer(
             text=f"<b>Sizning kurslaringiz ruyhati</b>:{text}\n\n"
             f"Agar admin siz bilan bog'lanmagan bo'lsa, kursdan qayta ro'yxatdan o'ting!!!"
@@ -23,7 +23,7 @@ async def cansel_course(message: types.Message, state=None):
         text=''
         if data is not None:
             for i in data:
-                text +=f"\n {data.index(i)+1}.{i['course']}"
+                text +=f"\n {data.index(i)+1}. {i['course']}"
             await message.answer(
             text=f"List of your courses:\n{text}\n\n"
             f"If the administrator has not contacted you, please re-register for the course!!!"
@@ -36,7 +36,7 @@ async def cansel_course(message: types.Message, state=None):
         text=''
         if data is not None:
             for i in data:
-                text +=f"\n {data.index(i)+1}.{i['course']}"
+                text +=f"\n {data.index(i)+1}. {i['course']}"
             await message.answer(
             text=f"Список ваших курсов:\n{text}\n\n"
             f"Если администратор с вами не связался, пожалуйста, перезапишитесь на курс!!!"

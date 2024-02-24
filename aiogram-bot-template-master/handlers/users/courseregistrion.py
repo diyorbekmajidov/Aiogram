@@ -185,12 +185,11 @@ async def get_contact(message: types.Message,state: FSMContext):
         user_info_message = f"1.Ismi:{username}\n2.Kurs:{course}\n3.O'qtuvchi:{teacher}\n4.Telfon raqami:{phonenumber}"
         for admin in ADMINS:
             await dp.bot.send_message(admin, user_info_message)
-        databs.update_user_course(chat_id, course,username,teacher)
-    else:
-        user_info_message = f"1.Ismi:{username}\n2.Kurs:{course}\n3.O'qtuvchi:{teacher}\n4.Telfon raqami:{phonenumber}"
-        for admin in ADMINS:
-            await dp.bot.send_message(admin, user_info_message)
-        databs.add_course_user(chat_id,username,course,phonenumber,teacher)
+
+    user_info_message = f"1.Ismi:{username}\n2.Kurs:{course}\n3.O'qtuvchi:{teacher}\n4.Telfon raqami:{phonenumber}"
+    for admin in ADMINS:
+        await dp.bot.send_message(admin, user_info_message)
+    databs.add_course_user(chat_id,username,course,phonenumber,teacher)
 
     lang = databs.get_user(chat_id)['lang']
     await send_confirmation_message(message, lang, username, teacher, phonenumber)
