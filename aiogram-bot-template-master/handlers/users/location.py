@@ -26,17 +26,17 @@ async def settings_bot(message: types.Message, state=None):
 async def send_location(message: types.Message):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
         await message.answer(
-            text="Premium Education uquv markazi\n📍 Davlat xizmatlar markazi\n🕓 10:00 - 20:50\n✅ Wi-Fi\n✅ Kaworking zone",
+            text="Premium Education uquv markazi\n📍 Davlat xizmatlar markazi\n🕓 7:30 - 19:30\n✅ Wi-Fi\n✅ Kaworking zone",
         )
         await bot.send_location(message.chat.id, latitude=39.647000, longitude=66.933333)
     elif  databs.get_user(message.from_user.id)['lang'] == 'en':
         await message.answer(
-            text="Premium Education training center\n📍 State services center\n🕓 10:00 - 20:50\n✅ Wi-Fi\n✅ Kaworking zone",
+            text="Premium Education training center\n📍 State services center\n🕓 7:30 - 19:30\n✅ Wi-Fi\n✅ Kaworking zone",
         )
         await bot.send_location(message.chat.id, latitude=39.647000, longitude=66.933333)
     else:
         await message.answer(
-            text="Учебный центр Премиум Образования\n📍Центр государственных услуг\n🕓 10:00 - 20:50\n ✅ Wi-Fi\n ✅ Зона Kaworking",
+            text="Учебный центр Премиум Образования\n📍Центр государственных услуг\n🕓 7:30 - 19:30\n ✅ Wi-Fi\n ✅ Зона Kaworking",
         )
         await bot.send_location(message.chat.id, latitude=39.647000, longitude=66.933333)
     
@@ -46,16 +46,16 @@ async def send_location(message: types.Message):
 async def send_location(message: types.Message):
     if databs.get_user(message.from_user.id)['lang'] == "uz":
         await message.answer(
-            text="Premium Education uquv markazi\n📍 Amir Temur ko’chasi, 141-uy\n🕓 10:00 - 20:50\n✅ Wi-Fi\n✅ Kaworking zone",
+            text="Premium School uquv markazi\n📍 Amir Temur ko’chasi, 141-uy\n🕓 7:30 - 19:30\n✅ Wi-Fi\n✅ Kaworking zone",
         )
         await bot.send_location(message.chat.id, latitude=39.65369017615916, longitude=66.95189418116307)
     elif databs.get_user(message.from_user.id)['lang'] == "en":
         await message.answer(
-            text="Premium Education training center\n📍 Amir Temur Street, 141\n🕓 10:00 - 20:50\n✅ Wi-Fi\n✅ Kaworking zone",
+            text="Premium School training center\n📍 Amir Temur Street, 141\n🕓 7:30 - 19:30\n✅ Wi-Fi\n✅ Kaworking zone",
         )
         await bot.send_location(message.chat.id, latitude=39.65369017615916, longitude=66.95189418116307)
     else:
         await message.answer(
-            text="Учебный центр Премиум Образования\n📍улица Амира Темура, 141\n🕓 10:00 - 20:50\n ✅ Wi-Fi\n ✅ Зона Kaworking",
+            text="Образовательный центр Premium School\n📍улица Амира Темура, 141\n🕓 7:30 - 19:30\n ✅ Wi-Fi\n ✅ Зона Kaworking",
         )
         await bot.send_location(message.chat.id, latitude=39.65369017615916, longitude=66.95189418116307)
